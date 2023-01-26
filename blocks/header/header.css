@@ -6,6 +6,6 @@
 @media screen and (max-width: 425px) {
   .header {
     max-width: 100%;
-    margin-top: 28px;
+    margin-top: 28px auto 42px;
   }
 }

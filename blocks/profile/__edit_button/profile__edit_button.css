@@ -1,0 +1,19 @@
+.profile__edit_button {
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  border: 1px solid #fff;
+  background-image: url('../../../images/Vector.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  align-self: center;
+  margin-left: 18px;
+}
+
+@media screen and (max-width: 767px) {
+  .profile__edit_button {
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+  }
+}

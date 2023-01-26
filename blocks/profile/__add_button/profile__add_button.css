@@ -1,0 +1,19 @@
+.profile__add_button {
+  min-width: 150px;
+  min-height: 50px;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  align-self: center;
+  margin-left: auto;
+  background-image: url('../../../images/vector_cross.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 767px) {
+  .profile__add_button {
+    width: 93%;
+    margin: 0 auto;
+  }
+}
