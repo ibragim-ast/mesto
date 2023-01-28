@@ -6,7 +6,7 @@
   white-space: nowrap;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1023px) {
   .profile__user_name {
     font-weight: 500;
     font-size: 27px;
