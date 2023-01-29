@@ -13,7 +13,4 @@
   opacity: .5;
 }
 
-.element__button:active {
-  opacity: .5;
-  background-color: #000;
-}
+.element__button:active {}
