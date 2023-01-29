@@ -1,4 +1,4 @@
-.element__button {
+.elements__button {
   border: none;
   background-color: transparent;
   background-image: url(../../../images/Vector\ \(Stroke\).png);
@@ -9,8 +9,8 @@
   cursor: pointer;
 }
 
-.element__button:hover {
+.elements__button:hover {
   opacity: .5;
 }
 
-.element__button:active {}
+.elements__button:active {}
