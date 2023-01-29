@@ -5,7 +5,14 @@
   font-size: 14px;
   line-height: 17px;
   outline: none;
-  width: 358px;
+  max-width: 358px;
+  width: 100%;
   margin: 0 auto 28px;
   padding-bottom: 10px;
+}
+
+@media screen and (max-width: 425px) {
+  .popup__name {
+    max-width: 83%;
+  }
 }

@@ -11,3 +11,11 @@
   background-repeat: no-repeat;
   cursor: pointer;
 }
+
+@media screen and (max-width: 425px) {
+  .popup__close {
+    width: 20px;
+    height: 20px;
+    right: 0;
+  }
+}
