@@ -8,3 +8,12 @@
   background-position: center;
   cursor: pointer;
 }
+
+.element__button:hover {
+  opacity: .5;
+}
+
+.element__button:active {
+  opacity: .5;
+  background-color: #000;
+}
