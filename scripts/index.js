@@ -4,8 +4,8 @@ const closeButton = popup.querySelector('.popup__close');
 const popupContainer = popup.querySelector('.popup__container');
 let nameInput = popup.querySelector('.popup__name-input');
 let jobInput = popup.querySelector('.popup__job-input');
-let profileUserName = document.querySelector('.profile__user_name');
-let profileUserProfession = document.querySelector('.profile__user_profession');
+let profileUserName = document.querySelector('.profile__user-name');
+let profileUserProfession = document.querySelector('.profile__user-profession');
 
 const handleEditButtonClick = () => {
   popup.classList.add('popup_opened');
