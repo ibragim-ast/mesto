@@ -20,7 +20,6 @@
   .elements__list {
     grid-template-columns: repeat(1, 282px);
     grid-template-rows: repeat(6, 361px);
-    justify-content: center;
     row-gap: 20px;
   }
 }
