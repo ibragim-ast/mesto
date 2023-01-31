@@ -3,7 +3,7 @@
   background-color: transparent;
   background-image: url(../../../images/vektor_stroke.png);
   background-repeat: no-repeat;
-  width: 40px;
+  min-width: 40px;
   height: 19px;
   background-position: center;
   cursor: pointer;
@@ -12,5 +12,3 @@
 .elements__button:hover {
   opacity: .5;
 }
-
-.elements__button:active {}
