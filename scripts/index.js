@@ -17,37 +17,9 @@ const addCardSubmitButton = addCardPopup.querySelector('.popup_submit-button_add
 const popupLargeImageContainer = document.querySelector('.popup_type_large-image');
 const popupImage = popupLargeImageContainer.querySelector('.popup__image');
 const popupImageCaption = popupLargeImageContainer.querySelector('.popup__image-caption');
-const closePopupButton = document.querySelector('.popup__close');
 const addCardForm = addCardPopup.querySelector('.popup__form');
 const editProfileForm = editProfilePopup.querySelector('.popup__form');
-
-// начальный массив изображений
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+const templateElement = document.getElementById('card-template');
 
 //функция открытия попапа
 function openPopup(popup) {
@@ -56,9 +28,9 @@ function openPopup(popup) {
 
 // функция открытия попапа EditProfile
 const handleEditButtonClick = () => {
-  editProfilePopup.classList.add('popup_opened');
   profileNameInput.value = profileUserName.textContent;
   jobInput.value = profileUserProfession.textContent;
+  openPopup(editProfilePopup);
 };
 
 // функция сохранения внесенных данных в EditProfile
@@ -71,15 +43,17 @@ function handleEditProfileForm(evt) {
 
 // функция открытия попапа добавления карточки
 const handleAddCardButtonClick = () => {
-  addCardPopup.classList.add('popup_opened');
+  openPopup(addCardPopup);
 };
 
 // функция создания новой карточки
 function createNewCard(cardName, cardLink) {
-  const cardElement = document.querySelector('#card-template').content.cloneNode(true);
+  const cardElement = templateElement.content.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
-  const cardTitle = cardElement.querySelector('.card__title').textContent = cardName;
+  cardElement.querySelector('.card__image').alt = cardName;
+  cardElement.querySelector('.card__title').textContent = cardName;
   cardImage.src = cardLink;
+
   cardImage.addEventListener("click", function (evt) {
     popupImage.src = cardLink;
     popupImageCaption.textContent = cardName;
@@ -93,14 +67,13 @@ function createNewCard(cardName, cardLink) {
 function handleAddCardForm(evt) {
   evt.preventDefault();
   addCard(cardName.value, cardLink.value);
-  cardName.value = '';
-  cardLink.value = '';
   closePopup(addCardPopup);
+  evt.target.reset();
 };
 
 //функция удаления карточек
 function removeCard(event) {
-  if (event.target.matches('.card__remove-button')) {
+  if (event.target.classList.contains('card__remove-button')) {
     const cardToRemove = event.target.closest('.card');
     cardToRemove.remove();
   }
@@ -129,10 +102,7 @@ const addCards = (cards) => {
 //функция обработки кнопки закрытия попапа
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-    if (evt.target.classList.contains('popup__close')) {
+    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close')) {
       closePopup(popup)
     }
   })
@@ -153,7 +123,9 @@ editProfileForm.addEventListener('submit', handleEditProfileForm);
 addCards(initialCards);
 
 //добавление слушателей событий для удаления карточек и лайков
-cardsContainer.addEventListener('click', removeCard);
-cardsContainer.addEventListener('click', likeCard);
+cardsContainer.addEventListener('click', evt => {
+  removeCard(evt);
+  likeCard(evt);
+});
 
 
