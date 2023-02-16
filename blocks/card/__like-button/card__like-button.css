@@ -1,4 +1,4 @@
-.elements__button {
+.card__like-button {
   border: none;
   background: center transparent no-repeat url(../../../images/vektor_stroke.png);
   min-width: 40px;
@@ -6,6 +6,6 @@
   cursor: pointer;
 }
 
-.elements__button:hover {
+.card__like-button:hover {
   opacity: .5;
 }

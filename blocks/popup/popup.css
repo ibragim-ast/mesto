@@ -10,4 +10,5 @@
   align-items: center;
   padding: 20px;
   display: none;
+  transition: opacity 0.3s ease-in-out;
 }
