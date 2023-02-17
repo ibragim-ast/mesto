@@ -50,7 +50,7 @@ const handleAddCardButtonClick = () => {
 function createNewCard(cardName, cardLink) {
   const cardElement = templateElement.content.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
-  cardElement.querySelector('.card__image').alt = cardName;
+  cardImage.alt = cardName;
   cardElement.querySelector('.card__title').textContent = cardName;
   cardImage.src = cardLink;
 
