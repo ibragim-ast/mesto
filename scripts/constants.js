@@ -25,3 +25,13 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+const options = {
+  formSelector: '.form',
+  submitSelector: '.form__submit',
+  inputSelector: '.form__input',
+  inputSectionSelector: '.form__section',
+  inputErrorSelector: '.form__input-error',
+  inputErrorClass: 'form__input-error_active',
+  disabledButtonClass: 'form__submit_inactive',
+}

@@ -20,8 +20,6 @@ const addCardForm = addCardPopup.querySelector('.form');
 const editProfileForm = editProfilePopup.querySelector('.form');
 const templateElement = document.getElementById('card-template');
 
-
-
 //функция открытия попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -129,73 +127,6 @@ cardsContainer.addEventListener('click', evt => {
   likeCard(evt);
 });
 
-//----===+++===-----//
-
-const hidenError = (errorElement) => {
-  errorElement.innerText = '';
-  errorElement.classList.remove('form__input-error_active');
-};
-
-const showError = (errorElement, message) => {
-  errorElement.innerText = message;
-  errorElement.classList.add('form__input-error_active');
-};
-
-const toggleInputState = (inputElement) => {
-  const isValid = inputElement.validity.valid;
-  const inputSectionElement = inputElement.closest('.form__section');
-  const errorElement = inputSectionElement.querySelector('.form__input-error');
-  if (isValid) {
-    hidenError(errorElement);
-  } else {
-    showError(errorElement, inputElement.validationMessage);
-  };
-};
-
-const enableButton = (buttonElement) => {
-  buttonElement.removeAttribute('disabled');
-  buttonElement.classList.remove('form__submit_inactive');
-};
-
-const disableButton = (buttonElement) => {
-  buttonElement.setAttribute('disabled', 'true');
-  buttonElement.classList.add('form__submit_inactive');
-};
-
-const setEventListeners = (form) => {
-  const submitElement = form.querySelector('.form__submit');
-  const inputs = Array.from(form.querySelectorAll('.form__input'));
-
-  inputs.forEach(inputElement => {
-    inputElement.addEventListener('input', () => {
-      toggleInputState(inputElement);
-      toggleButtonstate(inputs, submitElement);
-    });
-  });
-
-  const toggleButtonstate = (inputs, submitElement) => {
-    const formIsValid = inputs.every(inputElement => inputElement.validity.valid);
-
-    if (formIsValid) {
-      enableButton(submitElement);
-    } else {
-      disableButton(submitElement)
-    };
-  };
-
-  toggleButtonstate(inputs, submitElement);
-};
-
-
-const enableValidation = () => {
-  const forms = Array.from(document.querySelectorAll('.form'));
-  forms.forEach(form => {
-    setEventListeners(form);
-  });
-};
-
-enableValidation();
-
-
+enableValidation(options);
 
 
