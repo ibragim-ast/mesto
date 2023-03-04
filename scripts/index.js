@@ -131,38 +131,71 @@ cardsContainer.addEventListener('click', evt => {
 
 //----===+++===-----//
 
-const form = document.querySelector('.form');
+const hidenError = (errorElement) => {
+  errorElement.innerText = '';
+  errorElement.classList.remove('form__input-error_active');
+};
 
-const submitElement = form.querySelector('.form__submit');
-const inputs = Array.from(form.querySelectorAll('.form__input'));
-inputs.forEach(inputElement => {
-  inputElement.addEventListener('input', () => {
-    const isValid = inputElement.validity.valid;
-    const inputSectionElement = inputElement.parentNode;
-    const errorElement = inputSectionElement.querySelector('.form__input-error')
-    if (isValid) {
-      errorElement.innerText = '';
-      errorElement.classList.remove('form__input-error_active');
-    } else {
-      errorElement.innerText = inputElement.validationMessage;
-      errorElement.classList.add('form__input-error_active');
-    }
-    toggleButtonstate(inputs, submitElement);
-  });
-});
+const showError = (errorElement, message) => {
+  errorElement.innerText = message;
+  errorElement.classList.add('form__input-error_active');
+};
 
-const toggleButtonstate = (inputs, submitElement) => {
-  const formIsValid = inputs.every((inputElement) => {
-    return inputElement.validity.valid
-  });
-
-  if (formIsValid) {
-    submitElement.removeAttribute('disabled');
-    submitElement.classList.remove('form__submit_inactive');
+const toggleInputState = (inputElement) => {
+  const isValid = inputElement.validity.valid;
+  const inputSectionElement = inputElement.closest('.form__section');
+  const errorElement = inputSectionElement.querySelector('.form__input-error');
+  if (isValid) {
+    hidenError(errorElement);
   } else {
-    submitElement.setAttribute('disabled', 'true');
-    submitElement.classList.add('form__submit_inactive');
+    showError(errorElement, inputElement.validationMessage);
   };
 };
 
-toggleButtonstate(inputs, submitElement);
+const enableButton = (buttonElement) => {
+  buttonElement.removeAttribute('disabled');
+  buttonElement.classList.remove('form__submit_inactive');
+};
+
+const disableButton = (buttonElement) => {
+  buttonElement.setAttribute('disabled', 'true');
+  buttonElement.classList.add('form__submit_inactive');
+};
+
+const setEventListeners = (form) => {
+  const submitElement = form.querySelector('.form__submit');
+  const inputs = Array.from(form.querySelectorAll('.form__input'));
+
+  inputs.forEach(inputElement => {
+    inputElement.addEventListener('input', () => {
+      toggleInputState(inputElement);
+      toggleButtonstate(inputs, submitElement);
+    });
+  });
+
+  const toggleButtonstate = (inputs, submitElement) => {
+    const formIsValid = inputs.every(inputElement => inputElement.validity.valid);
+
+    if (formIsValid) {
+      enableButton(submitElement);
+    } else {
+      disableButton(submitElement)
+    };
+  };
+
+  toggleButtonstate(inputs, submitElement);
+};
+
+
+const enableValidation = () => {
+  const forms = Array.from(document.querySelectorAll('.form'));
+  forms.forEach(form => {
+    setEventListeners(form);
+  });
+};
+
+enableValidation();
+
+
+
+
