@@ -23,6 +23,7 @@ const templateElement = document.getElementById('card-template');
 //функция открытия попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', handleEscPopupClose)
 };
 
 // функция открытия попапа EditProfile
@@ -110,7 +111,16 @@ popups.forEach((popup) => {
 //функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleEscPopupClose)
 }
+
+//функция закрытия попапа по нажатию на Escape
+function handleEscPopupClose(event) {
+  if (event.key === "Escape") {
+    closePopup(document.querySelector('.popup_opened'));
+  }
+}
+
 
 //обработчики событий
 openAddCardPopupButton.addEventListener('click', handleAddCardButtonClick);

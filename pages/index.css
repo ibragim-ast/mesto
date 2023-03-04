@@ -36,7 +36,7 @@
 /* popup увеличенного изображения */
 @import url('../blocks/popup/_type_large-image/popup_type_large-image.css');
 @import url('../blocks/popup/__image/popup__image.css');
-/* forms */
+/* form */
 @import url('../blocks/form/form.css');
 @import url('../blocks/form/__title/form__title.css');
 @import url('../blocks/form/__section/form__section.css');
