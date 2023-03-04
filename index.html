@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="pages/index.css">
   <script src="./scripts/constants.js" defer></script>
   <script src="./scripts/index.js" defer></script>
+  <script src="./scripts/validate.js"></script>
 </head>
 
 <body class="page">
@@ -43,28 +44,43 @@
     <div class="popup popup_type_edit-profile">
       <div class="popup__container">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <form class="popup__form" name="myForm" method="post">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <input class="popup__input popup__input_type_profile-name" type="text" name="name" placeholder="Введите имя"
-            required>
-          <input class="popup__input popup__input_type_job" type="text" name="name" placeholder="Введите род занятий"
-            required>
-          <input class="popup__submit-button" type="submit" value="Сохранить">
+
+        <form class="form form__type_edit-profile" name="myForm" method="post" novalidate>
+          <h2 class="form__title">Редактировать профиль</h2>
+          <div class="form__section">
+            <input class="form__input form__input_type_profile-name" id="profile-name" type="text" name="name" placeholder="Введите имя" required
+              minlength="2" maxlength="40">
+            <span class="form__input-error" id="profile-name-error"></span>
+          </div>
+          <div class="form__section"></div>
+          <input class="form__input form__input_type_job" id="profile-job" type="text" name="name" placeholder="О себе" required minlength="2"
+            maxlength="200">
+          <span class="form__input-error" id="profile-job-error"></span>
+          <button class="form__submit" type="submit" value="Сохранить">Сохранить</button>
         </form>
+
       </div>
     </div>
+
     <!-- popup добавления карточки -->
     <div class="popup popup_type_add-card">
       <div class="popup__container">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <form class="popup__form popup__form_type_add-card" name="myForm" method="post">
-          <h2 class="popup__title">Новое место</h2>
-          <input class="popup__input popup__input_type_card-name" type="text" name="card-name" placeholder="Название"
-            required>
-          <input class="popup__input popup__input_type_link" type="url" name="card-link"
-            placeholder="Ссылка на картинку" required>
-          <input class="popup__submit-button" type="submit" value="Создать">
+
+        <form class="form form__type_add-card" name="myForm" method="post" novalidate>
+          <h2 class="form__title">Новое место</h2>
+          <div class="form__section">
+            <input class="form__input form__input_type_card-name" id="card-title" type="text" name="card-name" placeholder="Название" required
+              minlength="2" maxlength="30">
+            <span class="form__input-error" id="card-title-error"></span>
+          </div>
+          <div class="form__section">
+            <input class="form__input form__input_type_link" id="card-link" type="url" name="card-link" placeholder="Ссылка на картинку" required>
+            <span class="form__input-error" id="card-link-error"></span>
+          </div>
+          <button class="form__submit" type="submit" value="Создать">Создать</button>>
         </form>
+
       </div>
     </div>
     <!-- popup увеличенного изображения -->

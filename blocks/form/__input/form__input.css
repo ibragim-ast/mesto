@@ -1,4 +1,4 @@
-.popup__input {
+.form__input {
   max-width: 358px;
   width: 100%;
   border: none;
@@ -11,16 +11,20 @@
   padding: 0 0 10px 0;
 }
 
+.form__input_invalid {
+  border-bottom: 1px solid #ff0000;
+}
+
 @media screen and (max-width: 767px) {
-  .popup__input {
+  .form__input {
     max-width: 83%;
   }
 }
 
-.popup__input:nth-of-type(1) {
+.form__input:nth-of-type(1) {
   margin-bottom: 30px;
 }
 
-.popup__input:nth-of-type(2) {
+.form__input:nth-of-type(2) {
   margin-bottom: 48px;
 }

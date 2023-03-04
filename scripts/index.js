@@ -7,19 +7,20 @@ const elementsList = document.querySelector('.cards__list');
 const likeButton = document.querySelectorAll('.card__like-button');
 const popups = document.querySelectorAll('.popup');
 const editProfilePopup = document.querySelector('.popup_type_edit-profile');
-const profileNameInput = editProfilePopup.querySelector('.popup__input_type_profile-name');
-const jobInput = editProfilePopup.querySelector('.popup__input_type_job');
+const profileNameInput = editProfilePopup.querySelector('.form__input_type_profile-name');
+const jobInput = editProfilePopup.querySelector('.form__input_type_job');
 const editProfileSubmitButton = editProfilePopup.querySelector('.popup_submit-button_edit-profile');
 const addCardPopup = document.querySelector('.popup_type_add-card');
-const cardName = addCardPopup.querySelector('.popup__input_type_card-name');
-const cardLink = addCardPopup.querySelector('.popup__input_type_link');
-const addCardSubmitButton = addCardPopup.querySelector('.popup_submit-button_add-card');
+const cardName = addCardPopup.querySelector('.form__input_type_card-name');
+const cardLink = addCardPopup.querySelector('.form__input_type_link');
 const popupLargeImageContainer = document.querySelector('.popup_type_large-image');
 const popupImage = popupLargeImageContainer.querySelector('.popup__image');
 const popupImageCaption = popupLargeImageContainer.querySelector('.popup__image-caption');
-const addCardForm = addCardPopup.querySelector('.popup__form');
-const editProfileForm = editProfilePopup.querySelector('.popup__form');
+const addCardForm = addCardPopup.querySelector('.form');
+const editProfileForm = editProfilePopup.querySelector('.form');
 const templateElement = document.getElementById('card-template');
+
+
 
 //функция открытия попапа
 function openPopup(popup) {
@@ -128,4 +129,40 @@ cardsContainer.addEventListener('click', evt => {
   likeCard(evt);
 });
 
+//----===+++===-----//
 
+const form = document.querySelector('.form');
+
+const submitElement = form.querySelector('.form__submit');
+const inputs = Array.from(form.querySelectorAll('.form__input'));
+inputs.forEach(inputElement => {
+  inputElement.addEventListener('input', () => {
+    const isValid = inputElement.validity.valid;
+    const inputSectionElement = inputElement.parentNode;
+    const errorElement = inputSectionElement.querySelector('.form__input-error')
+    if (isValid) {
+      errorElement.innerText = '';
+      errorElement.classList.remove('form__input-error_active');
+    } else {
+      errorElement.innerText = inputElement.validationMessage;
+      errorElement.classList.add('form__input-error_active');
+    }
+    toggleButtonstate(inputs, submitElement);
+  });
+});
+
+const toggleButtonstate = (inputs, submitElement) => {
+  const formIsValid = inputs.every((inputElement) => {
+    return inputElement.validity.valid
+  });
+
+  if (formIsValid) {
+    submitElement.removeAttribute('disabled');
+    submitElement.classList.remove('form__submit_inactive');
+  } else {
+    submitElement.setAttribute('disabled', 'true');
+    submitElement.classList.add('form__submit_inactive');
+  };
+};
+
+toggleButtonstate(inputs, submitElement);

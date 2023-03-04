@@ -30,13 +30,18 @@
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/__container/popup__container.css');
 @import url('../blocks/popup/__close/popup__close.css');
-@import url('../blocks/popup/__title/popup__title.css');
-@import url('../blocks/popup/__input/popup__input.css');
-@import url('../blocks/popup/__submit-button/popup__submit-button.css');
-@import url('../blocks/popup/__form/popup__form.css');
 @import url('../blocks/popup/_opened/popup_opened.css');
 @import url('../blocks/popup/__image-container/popup__image-container.css');
 @import url('../blocks/popup/__figure/popup__figure.css');
 /* popup увеличенного изображения */
 @import url('../blocks/popup/_type_large-image/popup_type_large-image.css');
 @import url('../blocks/popup/__image/popup__image.css');
+/* forms */
+@import url('../blocks/form/form.css');
+@import url('../blocks/form/__title/form__title.css');
+@import url('../blocks/form/__section/form__section.css');
+@import url('../blocks/form/__input/form__input.css');
+@import url('../blocks/form/__input-error/form__input-error.css');
+@import url('../blocks/form/__input-error/_active/form__input-error_active.css');
+@import url('../blocks/form/__submit/form__submit.css');
+@import url('../blocks/form/__submit/_inactive/form__submit_inactive.css');
