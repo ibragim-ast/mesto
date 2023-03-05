@@ -50,6 +50,12 @@ const setEventListeners = (form, options) => {
     });
   });
   toggleButtonstate(inputs, submitElement, options.disabledButtonClass);
+
+  form.addEventListener('reset', () => {
+    setTimeout(() => {
+      toggleButtonstate(inputs, submitElement, options.disabledButtonClass), 0
+    })
+  })
 };
 
 const enableValidation = (options) => {
