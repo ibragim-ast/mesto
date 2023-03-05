@@ -19,6 +19,7 @@ const popupImageCaption = popupLargeImageContainer.querySelector('.popup__image-
 const addCardForm = addCardPopup.querySelector('.form');
 const editProfileForm = editProfilePopup.querySelector('.form');
 const templateElement = document.getElementById('card-template');
+const formAddCard = document.forms.addCard;
 
 //функция открытия попапа
 function openPopup(popup) {
@@ -43,7 +44,9 @@ function handleEditProfileForm(evt) {
 
 // функция открытия попапа добавления карточки
 const handleAddCardButtonClick = () => {
+  const submitElement = formAddCard.querySelector('.form__submit');
   openPopup(addCardPopup);
+  disableButton(submitElement, options.disabledButtonClass);
 };
 
 // функция создания новой карточки
@@ -121,7 +124,6 @@ function handleEscPopupClose(event) {
   }
 }
 
-
 //обработчики событий
 openAddCardPopupButton.addEventListener('click', handleAddCardButtonClick);
 openProfileEditButton.addEventListener('click', handleEditButtonClick);
@@ -138,5 +140,3 @@ cardsContainer.addEventListener('click', evt => {
 });
 
 enableValidation(options);
-
-
