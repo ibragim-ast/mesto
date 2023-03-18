@@ -19,6 +19,7 @@ const popupImageCaption = popupLargeImageContainer.querySelector('.popup__image-
 const addCardForm = addCardPopup.querySelector('.form');
 const editProfileForm = editProfilePopup.querySelector('.form');
 const templateElement = document.getElementById('card-template');
+const submitAddCardButton = addCardForm.querySelector('.form__submit')
 
 //функция открытия попапа
 function openPopup(popup) {
@@ -43,9 +44,9 @@ function handleEditProfileForm(evt) {
 
 // функция открытия попапа добавления карточки
 const handleAddCardButtonClick = () => {
-  const submitElement = addCardForm.querySelector('.form__submit');
+
   openPopup(addCardPopup);
-  disableButton(submitElement, options.disabledButtonClass);
+  disableButton(submitAddCardButton, options.disabledButtonClass);
 };
 
 // функция создания новой карточки
