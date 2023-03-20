@@ -35,3 +35,5 @@ const options = {
   inputErrorClass: 'form__input-error_active',
   disabledButtonClass: 'form__submit_inactive',
 }
+
+

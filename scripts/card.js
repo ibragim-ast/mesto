@@ -1,11 +1,13 @@
+import { openPopup } from './index.js';
+
 const likeButton = document.querySelector('.card__like-button');
 
 class Card {
-  constructor(title, link, templateSelector, myFunc) {
+  constructor(title, link, templateSelector, openPopup) {
     this._title = title;
     this._link = link;
     this._templateSelector = templateSelector;
-    this._myFunc = myFunc;
+    this._myFunc = openPopup;
   }
 
   _getTemplate() {
@@ -45,7 +47,7 @@ class Card {
 
   _setEventListeners() {
     this._element.addEventListener('click', () => {
-      this._myFunc();
+      this._openPopup();
     });
     this._element.addEventListener('click', () => {
       this._handleLikeButton();
@@ -54,7 +56,7 @@ class Card {
       this._handleRemoveButton();
     })
   }
-
 }
+
 
 export default Card
