@@ -1,3 +1,5 @@
+const likeButton = document.querySelector('.card__like-button');
+
 class Card {
   constructor(title, link, templateSelector, myFunc) {
     this._title = title;
@@ -27,13 +29,31 @@ class Card {
     return this._element
   }
 
-  _setEventListeners() {
-    this._element.querySelector('click', () => {
-      this._myFunc();
-    });
-
+  _handleLikeButton(event) {
+    if (event.target.matches('.card__like-button')) {
+      const cardToLike = event.target.closest('.card__like-button');
+      cardToLike.querySelector('.card__like-button').classList.toggle('card_like-button_active');
+    }
   }
 
+  _handleRemoveButton(event) {
+    if (event.target.classList.contains('card__remove-button')) {
+      const cardToRemove = event.target.closest('.card');
+      cardToRemove.remove();
+    }
+  }
+
+  _setEventListeners() {
+    this._element.addEventListener('click', () => {
+      this._myFunc();
+    });
+    this._element.addEventListener('click', () => {
+      this._handleLikeButton();
+    })
+    this._element.addEventListener('click', () => {
+      this._handleRemoveButton();
+    })
+  }
 
 }
 

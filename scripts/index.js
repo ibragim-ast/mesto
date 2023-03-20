@@ -6,7 +6,7 @@ const profileUserName = document.querySelector('.profile__user-name');
 const profileUserProfession = document.querySelector('.profile__user-profession');
 const cardsContainer = document.querySelector('.cards');
 const elementsList = document.querySelector('.cards__list');
-const likeButton = document.querySelectorAll('.card__like-button');
+//const likeButton = document.querySelectorAll('.card__like-button');
 const popups = document.querySelectorAll('.popup');
 const editProfilePopup = document.querySelector('.popup_type_edit-profile');
 const profileNameInput = editProfilePopup.querySelector('.form__input_type_profile-name');
@@ -77,20 +77,20 @@ function handleAddCardForm(evt) {
 };
 
 //функция удаления карточек
-function removeCard(event) {
-  if (event.target.classList.contains('card__remove-button')) {
-    const cardToRemove = event.target.closest('.card');
-    cardToRemove.remove();
-  }
-};
+// function removeCard(event) {
+//   if (event.target.classList.contains('card__remove-button')) {
+//     const cardToRemove = event.target.closest('.card');
+//     cardToRemove.remove();
+//   }
+// };
 
 // обработчик кнопки лайка
-function likeCard(event) {
-  if (event.target.matches('.card__like-button')) {
-    const cardToLike = event.target.closest('.card__like-button');
-    cardToLike.classList.toggle('card_like-button_active');
-  }
-};
+// function likeCard(event) {
+//   if (event.target.matches('.card__like-button')) {
+//     const cardToLike = event.target.closest('.card__like-button');
+//     cardToLike.classList.toggle('card_like-button_active');
+//   }
+// };
 
 // функция добавления новой карточки
 const addCard = (name, link) => {
