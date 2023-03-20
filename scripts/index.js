@@ -1,3 +1,5 @@
+import Card from './card.js'
+
 const openProfileEditButton = document.querySelector('.profile__edit-button');
 const openAddCardPopupButton = document.querySelector('.profile__add-button');
 const profileUserName = document.querySelector('.profile__user-name');
