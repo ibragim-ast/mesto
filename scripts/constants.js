@@ -1,5 +1,5 @@
 // начальный массив изображений
-const initialCards = [
+export const initialCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -26,7 +26,7 @@ const initialCards = [
   }
 ];
 
-const options = {
+export const options = {
   formSelector: '.form',
   submitSelector: '.form__submit',
   inputSelector: '.form__input',

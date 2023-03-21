@@ -1,62 +1,55 @@
-import { openPopup } from './index.js';
-
-const likeButton = document.querySelector('.card__like-button');
-
 class Card {
-  constructor(title, link, templateSelector, openPopup) {
-    this._title = title;
-    this._link = link;
+  constructor(dataCard, templateSelector, openPopupLargeImage) {
+    this._title = dataCard.name;
+    this._link = dataCard.link;
     this._templateSelector = templateSelector;
-    this._myFunc = openPopup;
+    this._openPopupLargeImage = openPopupLargeImage;
   }
 
   _getTemplate() {
-    const cardElement = document
-      .getElementById('card-template')
+    return document
+      .querySelector(this._templateSelector)
       .content
       .querySelector('.card')
       .cloneNode(true)
+  }
 
-    return cardElement;
+  _setData() {
+    this._imageElement.src = this._link;
+    this._imageElement.alt = this._title;
+    this._titleElement.textContent = this._title;
   }
 
   generateCard() {
     this._element = this._getTemplate();
+    this._titleElement = this._element.querySelector('.card__title');
+    this._imageElement = this._element.querySelector('.card__image');
+    this._likeButton = this._element.querySelector('.card__like-button');
+    this._deleteButton = this._element.querySelector('.card__remove-button');
     this._setEventListeners();
-
-    this._element.querySelector('.card__image').src = this._link;
-    this._element.querySelector('.card__image').alt = this._title;
-    this._element.querySelector('.card__title').textContent = this._title;
-
+    this._setData();
     return this._element
   }
 
-  _handleLikeButton(event) {
-    if (event.target.matches('.card__like-button')) {
-      const cardToLike = event.target.closest('.card__like-button');
-      cardToLike.querySelector('.card__like-button').classList.toggle('card_like-button_active');
-    }
+  _handleLikeButton() {
+    this._likeButton.classList.toggle('card__like-button_active')
   }
 
-  _handleRemoveButton(event) {
-    if (event.target.classList.contains('card__remove-button')) {
-      const cardToRemove = event.target.closest('.card');
-      cardToRemove.remove();
-    }
+  _handleRemoveButton() {
+    this._element.remove();
+    this._element = null
   }
 
   _setEventListeners() {
-    this._element.addEventListener('click', () => {
-      this._openPopup();
-    });
-    this._element.addEventListener('click', () => {
-      this._handleLikeButton();
-    })
-    this._element.addEventListener('click', () => {
-      this._handleRemoveButton();
-    })
-  }
-}
+    this._likeButton.addEventListener('click', () => this._handleLikeButton());
 
+    this._deleteButton.addEventListener('click', () =>
+      this._handleRemoveButton());
+
+    this._imageElement.addEventListener('click', () =>
+      this._openPopupLargeImage(this._link, this._title));
+  }
+
+}
 
 export default Card
