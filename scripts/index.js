@@ -25,6 +25,8 @@ const handleEditButtonClick = () => {
   profileNameInput.value = profileUserName.textContent;
   jobInput.value = profileUserProfession.textContent;
   openPopup(editProfilePopup);
+  const validation = new FormValidator(options, editProfileForm);
+  validation.enableValidation();
 };
 
 // функция сохранения внесенных данных в EditProfile
