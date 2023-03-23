@@ -17,16 +17,20 @@ const cardLink = addCardPopup.querySelector('.form__input_type_link');
 const popupLargeImageContainer = document.querySelector('.popup_type_large-image');
 const popupImage = popupLargeImageContainer.querySelector('.popup__image');
 const popupImageCaption = popupLargeImageContainer.querySelector('.popup__image-caption');
-const addCardForm = addCardPopup.querySelector('.form');
-const editProfileForm = editProfilePopup.querySelector('.form');
+const addCardForm = document.forms['addCard'];
+const editProfileForm = document.forms['editProfile'];
+
+const addCardValidator = new FormValidator(options, addCardForm);
+const editProfileValidator = new FormValidator(options, editProfileForm);
+
+addCardValidator.enableValidation();
+editProfileValidator.enableValidation();
 
 // функция открытия попапа EditProfile
 const handleEditButtonClick = () => {
   profileNameInput.value = profileUserName.textContent;
   jobInput.value = profileUserProfession.textContent;
   openPopup(editProfilePopup);
-  const validation = new FormValidator(options, editProfileForm);
-  validation.enableValidation();
 };
 
 // функция сохранения внесенных данных в EditProfile
@@ -71,8 +75,6 @@ const addCard = (card) => {
 
 // функция открытия попапа добавления карточки
 const handleAddCardButtonClick = () => {
-  const validation = new FormValidator(options, addCardForm);
-  validation.enableValidation();
   openPopup(addCardPopup);
 };
 
@@ -98,7 +100,7 @@ popups.forEach((popup) => {
 
 initialCards.forEach((item) => {
   const newCard = createCardGallery(item);
-  document.querySelector('.cards__list').append(newCard);
+  elementsList.append(newCard);
 });
 
 //обработчики событий
