@@ -1,4 +1,4 @@
-import Card from './Card.js'
+import Card from './utCard.js'
 import FormValidator from './FormValidator.js';
 import { initialCards, options } from './constants.js'
 
