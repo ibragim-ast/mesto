@@ -26,13 +26,19 @@ import Section from './Section.js';
 const addCardValidator = new FormValidator(options, addCardForm);
 const editProfileValidator = new FormValidator(options, editProfileForm);
 
+// обработка начального массива и добавление его на страницу
 const section = new Section({
   items: initialCards,
   renderer: (items) => {
-    const card = createCardGallery(items);
+    const card = createCard(items);
     section.addItem(card);
   }
 }, '.cards__list');
+
+//создание карточки
+const createCard = (dataCard) => {
+  return new Card(dataCard, '#card-template', openPopupLargeImage).generateCard();
+};
 
 // функция открытия попапа EditProfile
 const handleEditButtonClick = () => {
@@ -48,6 +54,7 @@ function handleEditProfileForm(evt) {
   profileUserProfession.textContent = jobInput.value;
   closePopup(editProfilePopup);
 };
+
 
 //функция открытия попапа
 function openPopup(popup) {
@@ -71,7 +78,7 @@ function handleEscPopupClose(event) {
 // функция обработки обработки кнопки submit в popup add Card
 function handleAddCardForm(evt) {
   evt.preventDefault();
-  addCard(createCardGallery({ name: cardName.value, link: cardLink.value }));
+  addCard(createCard({ name: cardName.value, link: cardLink.value }));
   closePopup(addCardPopup);
   evt.target.reset();
 };
@@ -93,9 +100,6 @@ function openPopupLargeImage(cardLink, cardName) {
   openPopup(popupLargeImageContainer);
 };
 
-const createCardGallery = (dataCard) => {
-  return new Card(dataCard, '#card-template', openPopupLargeImage).generateCard();
-};
 
 //функция обработки кнопки закрытия попапа
 popups.forEach((popup) => {
@@ -106,11 +110,7 @@ popups.forEach((popup) => {
   })
 });
 
-
-
-
 //обработчики событий
-section.renderer();
 openAddCardPopupButton.addEventListener('click', handleAddCardButtonClick);
 openProfileEditButton.addEventListener('click', handleEditButtonClick);
 addCardForm.addEventListener('submit', handleAddCardForm);
@@ -118,3 +118,4 @@ editProfileForm.addEventListener('submit', handleEditProfileForm);
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
 
+section.renderer();
