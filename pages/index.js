@@ -44,7 +44,6 @@ const editProfileFormPopup = new PopupWithForm(editProfilePopup, handleEditProfi
 openProfileEditButton.addEventListener('click', () => {
   editProfileFormPopup.setInputValues(userInfo.getUserInfo());
   editProfileFormPopup.open();
-  const { name, job } = userInfo.getUserInfo();
 });
 
 editProfileFormPopup.setEventListeners();
@@ -53,6 +52,8 @@ function handleCardClick(cardLink, cardName) {
   popupWithImage.open(cardLink, cardName);
   popupWithImage.setEventListeners();
 };
+
+const addCardFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
 
 function createCard(dataCard) {
   const card = new Card({ dataCard }, '#card-template', handleCardClick);
@@ -64,7 +65,6 @@ function renderCard(data) {
   defaultCardList.addItem(createCard(data))
 };
 
-// обработка начального массива и добавление его на страницу
 const defaultCardList = new Section({
   items: initialCards,
   renderer: renderCard
@@ -74,8 +74,6 @@ function handleFormSubmitNewCard(data) {
   renderCard(data);
   addCardFormPopup.close();
 }
-
-const addCardFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
 
 openAddCardPopupButton.addEventListener('click', () => {
   addCardFormPopup.open();
