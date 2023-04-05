@@ -13,14 +13,6 @@ class PopupWithImage extends Popup {
     this._caption.textContent = name;
     super.open();
   }
-
-  setEventListeners() {
-    super.setEventListeners();
-    const closeBtn = this._popup.querySelector('.popup__close');
-    closeBtn.addEventListener('click', () => {
-      this.close();
-    });
-  }
 }
 
 export default PopupWithImage;
