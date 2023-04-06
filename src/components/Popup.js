@@ -1,9 +1,10 @@
 class Popup {
   constructor(popup) {
     this._popup = popup;
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
-  _handleEscClose = (event) => {
+  _handleEscClose(event) {
     if (event.key === "Escape") {
       this.close();
     }
