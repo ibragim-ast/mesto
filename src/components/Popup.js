@@ -21,15 +21,12 @@ class Popup {
   }
 
   setEventListeners() {
-    this._popup.querySelector('.popup__close').addEventListener('click', () => {
-      this.close();
-    });
-
     this._popup.addEventListener('click', (evt) => {
-      if (evt.target === this._popup) {
+      if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
         this.close();
       }
     })
+
   }
 }
 
