@@ -9,8 +9,6 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import {
   initialCards,
   options,
-  addCardForm,
-  editProfileForm,
   popups,
   elementsList,
   openAddCardPopupButton,
@@ -27,6 +25,9 @@ import {
   profileUserProfession,
   editProfilePopup
 } from '../utils/constants.js';
+
+const addCardForm = document.forms['addCard'];
+const editProfileForm = document.forms['editProfile'];
 
 // Создание экземпляра валидатора для формы добавления карточки
 const addCardValidator = new FormValidator(options, addCardForm);
@@ -65,8 +66,9 @@ editProfileFormPopup.setEventListeners();
 // Функция для обработки кликов на изображении карточки и открытия всплывающего окна с полноразмерным изображением
 function handleCardClick(cardLink, cardName) {
   popupWithImage.open(cardLink, cardName);
-  popupWithImage.setEventListeners();
 };
+
+popupWithImage.setEventListeners();
 
 // Создание экземпляра всплывающего окна для добавления карточки
 const addCardFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
