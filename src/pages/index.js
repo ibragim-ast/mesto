@@ -53,11 +53,13 @@ function handleEditProfile(input) {
 const editProfileFormPopup = new PopupWithForm(editProfilePopup, handleEditProfile);
 
 // Установка слушателей событий для всплывающего окна редактирования профиля
-openProfileEditButton.addEventListener('click', () => {
+function handleOpenEditForm() {
   editProfileFormPopup.setInputValues(userInfo.getUserInfo());
   editProfileValidator.clearFormErrors();
   editProfileFormPopup.open();
-});
+}
+
+openProfileEditButton.addEventListener('click', handleOpenEditForm);
 editProfileFormPopup.setEventListeners();
 
 // Функция для обработки кликов на изображении карточки и открытия всплывающего окна с полноразмерным изображением
