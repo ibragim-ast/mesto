@@ -83,7 +83,6 @@ function renderCard(data) {
 
 // Создание экземпляра класса Section для отображения начальных карточек на странице
 const defaultCardList = new Section({
-  items: initialCards,
   renderer: renderCard
 }, '.cards__list');
 
@@ -109,4 +108,4 @@ addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
 
 // Отрисовка начальных карточек на странице
-defaultCardList.renderer();
+defaultCardList.renderer(initialCards);
