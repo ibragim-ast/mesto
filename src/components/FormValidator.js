@@ -63,6 +63,16 @@ class FormValidator {
     });
   }
 
+  clearFormErrors() {
+    this._inputList.forEach(inputElement => {
+      const inputSectionElement = inputElement.closest(this._options.inputSectionSelector);
+      const errorElement = inputSectionElement.querySelector(this._options.inputErrorSelector);
+      this._hiddenError(errorElement);
+    });
+    this._disableButton(this._submitElement);
+  }
+
+
   enableValidation() {
     this._setEventListeners();
   }

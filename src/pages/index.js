@@ -55,6 +55,7 @@ const editProfileFormPopup = new PopupWithForm(editProfilePopup, handleEditProfi
 // Установка слушателей событий для всплывающего окна редактирования профиля
 openProfileEditButton.addEventListener('click', () => {
   editProfileFormPopup.setInputValues(userInfo.getUserInfo());
+  editProfileValidator.clearFormErrors();
   editProfileFormPopup.open();
 });
 editProfileFormPopup.setEventListeners();
@@ -94,6 +95,7 @@ function handleFormSubmitNewCard(data) {
 
 // Установка слушателей событий для кнопки добавления карточки
 openAddCardPopupButton.addEventListener('click', () => {
+  addCardValidator.clearFormErrors();
   addCardFormPopup.open();
 });
 
