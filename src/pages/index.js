@@ -39,10 +39,21 @@ const editProfileValidator = new FormValidator(options, editProfileForm);
 const popupWithImage = new PopupWithImage(popupLargeImageContainer);
 
 // Установка слушателей событий для всплывающего окна с полноразмерным изображением
-popupWithImage.setEventListeners();
+
 
 // Создание экземпляра класса UserInfo для отображения информации о пользователе
 const userInfo = new UserInfo({ userNameSelector: profileUserName, userJobSelector: profileUserProfession });
+
+// Создание экземпляра всплывающего окна для редактирования профиля
+const editProfileFormPopup = new PopupWithForm(editProfilePopup, handleEditProfile);
+
+// Создание экземпляра всплывающего окна для добавления карточки
+const addCardFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
+
+// Создание экземпляра класса Section для отображения начальных карточек на странице
+const defaultCardList = new Section({
+  renderer: renderCard
+}, '.cards__list');
 
 // Функция для обработки отправки формы редактирования профиля
 function handleEditProfile(input) {
@@ -50,28 +61,10 @@ function handleEditProfile(input) {
   editProfileFormPopup.close();
 }
 
-// Создание экземпляра всплывающего окна для редактирования профиля
-const editProfileFormPopup = new PopupWithForm(editProfilePopup, handleEditProfile);
-
-// Установка слушателей событий для всплывающего окна редактирования профиля
-function handleOpenEditForm() {
-  editProfileFormPopup.setInputValues(userInfo.getUserInfo());
-  editProfileValidator.clearFormErrors();
-  editProfileFormPopup.open();
-}
-
-openProfileEditButton.addEventListener('click', handleOpenEditForm);
-editProfileFormPopup.setEventListeners();
-
 // Функция для обработки кликов на изображении карточки и открытия всплывающего окна с полноразмерным изображением
 function handleCardClick(cardLink, cardName) {
   popupWithImage.open(cardLink, cardName);
 };
-
-popupWithImage.setEventListeners();
-
-// Создание экземпляра всплывающего окна для добавления карточки
-const addCardFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
 
 // Функция для создания нового элемента карточки на основе переданных данных
 function createCard(dataCard) {
@@ -85,30 +78,35 @@ function renderCard(data) {
   defaultCardList.addItem(createCard(data))
 };
 
-// Создание экземпляра класса Section для отображения начальных карточек на странице
-const defaultCardList = new Section({
-  renderer: renderCard
-}, '.cards__list');
-
 // Функция для обработки отправки формы добавления карточки
 function handleFormSubmitNewCard(data) {
   renderCard(data);
   addCardFormPopup.close();
 }
 
+// Установка слушателей событий для всплывающего окна редактирования профиля
+function handleOpenEditForm() {
+  editProfileFormPopup.setInputValues(userInfo.getUserInfo());
+  editProfileValidator.clearFormErrors();
+  editProfileFormPopup.open();
+}
+
 // Установка слушателей событий для кнопки добавления карточки
-openAddCardPopupButton.addEventListener('click', () => {
+function handleAddCardButtonClick() {
   addCardValidator.clearFormErrors();
   addCardFormPopup.open();
-});
+}
 
-// Установка слушателей событий для всплывающего окна добавления карточки
+openProfileEditButton.addEventListener('click', handleOpenEditForm);
+openAddCardPopupButton.addEventListener('click', handleAddCardButtonClick);
+
+popupWithImage.setEventListeners();
 addCardFormPopup.setEventListeners();
+popupWithImage.setEventListeners();
+editProfileFormPopup.setEventListeners();
 
-// Включение валидации формы добавления карточки
+// Включение валидации форм
 addCardValidator.enableValidation();
-
-// Включение валидации формы редактирования профиля
 editProfileValidator.enableValidation();
 
 // Отрисовка начальных карточек на странице
