@@ -38,8 +38,6 @@ const editProfileValidator = new FormValidator(options, editProfileForm);
 // Создание экземпляра всплывающего окна с полноразмерным изображением
 const popupWithImage = new PopupWithImage(popupLargeImageContainer);
 
-// Установка слушателей событий для всплывающего окна с полноразмерным изображением
-
 
 // Создание экземпляра класса UserInfo для отображения информации о пользователе
 const userInfo = new UserInfo({ userNameSelector: profileUserName, userJobSelector: profileUserProfession });
