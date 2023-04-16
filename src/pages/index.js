@@ -1,5 +1,6 @@
 import './index.css'
 
+import { api } from '../components/Api.js'
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
@@ -7,7 +8,6 @@ import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import {
-  initialCards,
   options,
   popups,
   elementsList,
@@ -25,6 +25,7 @@ import {
   profileUserProfession,
   editProfilePopup
 } from '../utils/constants.js';
+import { data } from 'autoprefixer';
 
 const addCardForm = document.forms['addCard'];
 const editProfileForm = document.forms['editProfile'];
@@ -59,6 +60,18 @@ function handleEditProfile(input) {
   editProfileFormPopup.close();
 }
 
+api.getInitialCards()
+  .then(res => {
+    const data = res.map(item => {
+      return { name: item.name, link: item.link };
+    });
+    defaultCardList.renderer(data);
+    console.log('массив данных', data);
+  })
+  .catch(err => {
+    console.error('ошибка получения данных', err);
+  });
+
 // Функция для обработки кликов на изображении карточки и открытия всплывающего окна с полноразмерным изображением
 function handleCardClick(cardLink, cardName) {
   popupWithImage.open(cardLink, cardName);
@@ -78,7 +91,11 @@ function renderCard(data) {
 
 // Функция для обработки отправки формы добавления карточки
 function handleFormSubmitNewCard(data) {
-  renderCard(data);
+  api.createNewCard(data)
+    .then(res => {
+      const newCard = createCard({ name: res.name, link: res.link });
+      defaultCardList.addItem(newCard)
+    })
   addCardFormPopup.close();
 }
 
@@ -107,5 +124,3 @@ editProfileFormPopup.setEventListeners();
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
 
-// Отрисовка начальных карточек на странице
-defaultCardList.renderer(initialCards);
