@@ -3,6 +3,7 @@ class Card {
     this._title = dataCard.name;
     this._link = dataCard.link;
     this._id = dataCard._id;
+    this._likesCount = dataCard._likes;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -19,6 +20,7 @@ class Card {
     this._imageElement.src = this._link;
     this._imageElement.alt = this._title;
     this._titleElement.textContent = this._title;
+    this._likes.textContent = this._likesCount;
   }
 
   generateCard() {
@@ -26,6 +28,7 @@ class Card {
     this._titleElement = this._element.querySelector('.card__title');
     this._imageElement = this._element.querySelector('.card__image');
     this._likeButton = this._element.querySelector('.card__like-button');
+    this._likes = this._element.querySelector('.card__like-counter');
     this._deleteButton = this._element.querySelector('.card__remove-button');
     this._setEventListeners();
     this._setData();

@@ -63,8 +63,6 @@ function handleEditProfile(input) {
     .catch((error) => console.log(`Ошибка: ${error}`));
 }
 
-
-
 api.getUserInfo()
   .then((res) => {
     userInfo.setUserInfo(res.name, res.about);
@@ -74,7 +72,12 @@ api.getUserInfo()
 api.getInitialCards()
   .then(res => {
     const data = res.map(item => {
-      return { name: item.name, link: item.link, id: item._id };
+      return {
+        name: item.name,
+        link: item.link,
+        id: item._id,
+        likes: item.likes.length
+      };
     });
     defaultCardList.renderer(data);
   })
@@ -91,6 +94,7 @@ function handleCardClick(cardLink, cardName) {
 function createCard(dataCard) {
   const card = new Card({ dataCard }, '#card-template', handleCardClick);
   const cardTemp = card.generateCard();
+  card._likes.textContent = dataCard.likes;
   return cardTemp;
 };
 
@@ -103,7 +107,7 @@ function renderCard(data) {
 function handleFormSubmitNewCard(data) {
   api.createNewCard(data)
     .then(res => {
-      const newCard = createCard({ name: data.name, link: data.link });
+      const newCard = createCard({ name: data.name, link: data.link, likes: 0 });
       defaultCardList.addItem(newCard)
     })
   addCardFormPopup.close();

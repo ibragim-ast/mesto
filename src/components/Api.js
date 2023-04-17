@@ -4,6 +4,14 @@ class Api {
     this._headers = setting.headers;
   }
 
+  _checkErrors(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(res.status)
+  }
+
+
   getUserInfo() {
     return fetch(`${this._address}/users/me`, {
       method: 'GET',

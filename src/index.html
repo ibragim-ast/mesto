@@ -17,7 +17,7 @@
   <main class="main">
 
     <section class="profile">
-      <img class="profile__image" src="<%= require('./images/image.jpeg') %>" alt="Логотип проекта Место Россия">
+      <img class="profile__image" src="<%= require('./images/image.jpeg') %>" alt="Аватар пользователя">
       <div class="profile__info">
         <h1 class="profile__user-name">Ибрагим Астамиров</h1>
         <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
@@ -99,7 +99,10 @@
       <img class="card__image" src="#" alt="#">
       <div class="card__description">
         <h2 class="card__title"></h2>
-        <button class="card__like-button" type="button" aria-label="Лайк"></button>
+        <div class="card__like-group">
+          <button class="card__like-button" type="button" aria-label="Лайк"></button>
+          <span class="card__like-counter"></span>
+        </div>
       </div>
     </li>
   </template>
