@@ -15,10 +15,12 @@
 .card{background-color:#fff;border-radius:10px;height:361px;margin:0;overflow:hidden;position:relative;width:282px}
 .card__remove-button{background-color:transparent;background-image:url(96f3e8182c3a9915dfee.png);background-repeat:no-repeat;background-size:cover;border:none;cursor:pointer;height:19px;position:absolute;right:20px;top:20px;width:18px}.card__remove-button:hover{opacity:.6}
 .card__image{background-color:#000;cursor:pointer;display:block;height:282px;-o-object-fit:cover;object-fit:cover;width:282px}
-.card__description{align-items:center;display:flex;justify-content:space-between}
-.card__title{color:#000;font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin:25px 0 31px 20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.card__like-button{background:50% transparent no-repeat url(58ef6777ff569fef883d.png);border:none;cursor:pointer;height:19px;margin:22px 10px 38px;min-width:40px}.card__like-button:hover{opacity:.5}
+.card__description{align-items:center;display:flex;justify-content:space-between;max-width:270px}
+.card__title{color:#000;font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin:26px 0 31px 20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card__like-button{background:50% transparent no-repeat url(58ef6777ff569fef883d.png);border:none;cursor:pointer;height:19px;margin:0;min-width:40px}.card__like-button:hover{opacity:.5}
 .card__like-button_active{background-image:url(e787eeb70bb65b7b453a.svg)}
+.card__like-counter{color:#000;font-size:13px;font-style:normal;font-weight:400;line-height:16px;text-align:center}
+.card__like-group{display:flex;flex-direction:column;width:40px}
 .footer{margin:0 auto 60px}@media screen and (max-width:320px){.footer{margin-bottom:36px;width:88%}}
 .footer__copyright{color:#545454;font-size:18px;font-weight:400;line-height:22px;margin:0;padding:0}@media screen and (max-width:1023px){.footer__copyright{margin-left:8.3%}}@media screen and (max-width:320px){.footer__copyright{font-size:14px;line-height:17px;margin-left:0}}
 .popup{align-items:center;background:rgba(0,0,0,.5);bottom:0;display:flex;justify-content:center;left:0;margin:0;opacity:0;padding:0;position:fixed;right:0;top:0;transition:visibility .2s,opacity .2s;visibility:hidden;z-index:2}
