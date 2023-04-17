@@ -39,7 +39,6 @@ const editProfileValidator = new FormValidator(options, editProfileForm);
 // Создание экземпляра всплывающего окна с полноразмерным изображением
 const popupWithImage = new PopupWithImage(popupLargeImageContainer);
 
-
 // Создание экземпляра класса UserInfo для отображения информации о пользователе
 const userInfo = new UserInfo({ userNameSelector: profileUserName, userJobSelector: profileUserProfession });
 
@@ -56,17 +55,28 @@ const defaultCardList = new Section({
 
 // Функция для обработки отправки формы редактирования профиля
 function handleEditProfile(input) {
-  userInfo.setUserInfo(input.name, input.job);
-  editProfileFormPopup.close();
+  api.setUserInfo(input.name, input.job)
+    .then((res) => {
+      userInfo.setUserInfo(res.name, res.about);
+      editProfileFormPopup.close();
+    })
+    .catch((error) => console.log(`Ошибка: ${error}`));
 }
+
+
+
+api.getUserInfo()
+  .then((res) => {
+    userInfo.setUserInfo(res.name, res.about);
+  })
+  .catch((error) => console.log(`Ошибка: ${error}`));
 
 api.getInitialCards()
   .then(res => {
     const data = res.map(item => {
-      return { name: item.name, link: item.link };
+      return { name: item.name, link: item.link, id: item._id };
     });
     defaultCardList.renderer(data);
-    console.log('массив данных', data);
   })
   .catch(err => {
     console.error('ошибка получения данных', err);
@@ -93,11 +103,12 @@ function renderCard(data) {
 function handleFormSubmitNewCard(data) {
   api.createNewCard(data)
     .then(res => {
-      const newCard = createCard({ name: res.name, link: res.link });
+      const newCard = createCard({ name: data.name, link: data.link });
       defaultCardList.addItem(newCard)
     })
   addCardFormPopup.close();
 }
+
 
 // Установка слушателей событий для всплывающего окна редактирования профиля
 function handleOpenEditForm() {
