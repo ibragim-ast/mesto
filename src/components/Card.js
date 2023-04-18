@@ -1,9 +1,10 @@
 class Card {
-  constructor({ dataCard }, templateSelector, handleCardClick) {
+  constructor({ dataCard }, templateSelector, handleCardClick, hundleLikeCard) {
     this._title = dataCard.name;
     this._link = dataCard.link;
-    this._id = dataCard._id;
+    this._cardId = dataCard.id;
     this._likesCount = dataCard._likes;
+    this._hundleLikeCard = hundleLikeCard;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -21,6 +22,7 @@ class Card {
     this._imageElement.alt = this._title;
     this._titleElement.textContent = this._title;
     this._likes.textContent = this._likesCount;
+    this._id = this._cardId;
   }
 
   generateCard() {
@@ -37,6 +39,8 @@ class Card {
 
   _handleLikeButton() {
     this._likeButton.classList.toggle('card__like-button_active')
+    this._hundleLikeCard(this._cardId);
+    console.log(this._cardId);
   }
 
   _handleRemoveButton() {

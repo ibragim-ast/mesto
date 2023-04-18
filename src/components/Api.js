@@ -4,14 +4,6 @@ class Api {
     this._headers = setting.headers;
   }
 
-  _checkErrors(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(res.status)
-  }
-
-
   getUserInfo() {
     return fetch(`${this._address}/users/me`, {
       method: 'GET',
@@ -59,6 +51,19 @@ class Api {
       body: JSON.stringify({
         name: data.name, link: data.link
       })
+    })
+      .then((res) => res.ok ? res.json() : Promise.reject(new Error(`Ошибка ${res.status}`)))
+      .then(res => {
+        return res;
+      })
+      .catch(console.log);
+  }
+
+  putLikeCard(cardId) {
+    //console.log(cardId);
+    return fetch(`${this._address}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
     })
       .then((res) => res.ok ? res.json() : Promise.reject(new Error(`Ошибка ${res.status}`)))
       .then(res => {

@@ -79,11 +79,23 @@ api.getInitialCards()
         likes: item.likes.length
       };
     });
+    console.log(data)
     defaultCardList.renderer(data);
   })
   .catch(err => {
     console.error('ошибка получения данных', err);
   });
+
+function hundleLikeCard(cardId) {
+  api.putLikeCard(cardId)
+    .then((res) => {
+      const likesCounter = document.querySelector('.card__like-counter');
+      likesCounter.textContent = res.likes.length;
+    })
+    .catch(err => {
+      console.error('ошибка получения данных', err);
+    });
+}
 
 // Функция для обработки кликов на изображении карточки и открытия всплывающего окна с полноразмерным изображением
 function handleCardClick(cardLink, cardName) {
@@ -92,7 +104,8 @@ function handleCardClick(cardLink, cardName) {
 
 // Функция для создания нового элемента карточки на основе переданных данных
 function createCard(dataCard) {
-  const card = new Card({ dataCard }, '#card-template', handleCardClick);
+  const card = new Card({ dataCard }, '#card-template', handleCardClick, hundleLikeCard);
+  //console.log(dataCard)
   const cardTemp = card.generateCard();
   card._likes.textContent = dataCard.likes;
   return cardTemp;
@@ -107,8 +120,9 @@ function renderCard(data) {
 function handleFormSubmitNewCard(data) {
   api.createNewCard(data)
     .then(res => {
-      const newCard = createCard({ name: data.name, link: data.link, likes: 0 });
+      const newCard = createCard({ name: data.name, link: data.link, likes: 0, id: data.id });
       defaultCardList.addItem(newCard)
+      console.log(data);
     })
   addCardFormPopup.close();
 }
