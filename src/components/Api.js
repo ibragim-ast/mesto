@@ -4,16 +4,19 @@ class Api {
     this._headers = setting.headers;
   }
 
+  _checkErrors(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`)
+  }
+
   getUserInfo() {
     return fetch(`${this._address}/users/me`, {
       method: 'GET',
       headers: this._headers,
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .then(res => {
-        return res;
-      })
-      .catch(console.log)
+      .then(res => this._checkErrors(res))
   }
 
   setUserInfo(name, about) {
@@ -25,23 +28,14 @@ class Api {
         about: about
       })
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .then(res => {
-        return res;
-      })
-      .catch((error) => console.log(`Ошибка: ${error}`));
+      .then(res => this._checkErrors(res))
   }
-
 
   getInitialCards() {
     return fetch(`${this._address}/cards`, {
       headers: this._headers
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .then(res => {
-        return res;
-      })
-      .catch(console.log)
+      .then(res => this._checkErrors(res))
   }
 
   createNewCard(data) {
@@ -52,24 +46,23 @@ class Api {
         name: data.name, link: data.link
       })
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(new Error(`Ошибка ${res.status}`)))
-      .then(res => {
-        return res;
-      })
-      .catch(console.log);
+      .then(res => this._checkErrors(res))
   }
 
   putLikeCard(cardId) {
-    //console.log(cardId);
     return fetch(`${this._address}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(new Error(`Ошибка ${res.status}`)))
-      .then(res => {
-        return res;
-      })
-      .catch(console.log);
+      .then(res => this._checkErrors(res))
+  }
+
+  deleteLikeCard(cardId) {
+    return fetch(`${this._address}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then(res => this._checkErrors(res))
   }
 }
 

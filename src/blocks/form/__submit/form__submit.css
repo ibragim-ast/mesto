@@ -10,9 +10,8 @@
   border-radius: 2px;
   border: none;
   height: 50px;
-  margin: 0 auto 28px;
+  margin: -20px auto 28px;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .form__submit:hover {

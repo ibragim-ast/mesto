@@ -1,10 +1,13 @@
 class Card {
-  constructor({ dataCard }, templateSelector, handleCardClick, hundleLikeCard) {
+  constructor({ dataCard }, templateSelector, userId, handleCardClick, hundleLikeCard, removeLikeCard) {
     this._title = dataCard.name;
     this._link = dataCard.link;
     this._cardId = dataCard.id;
+    this._userId = userId;
     this._likesCount = dataCard._likes;
+    this._likesArr = [];
     this._hundleLikeCard = hundleLikeCard;
+    this._removeLike = removeLikeCard;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -21,9 +24,14 @@ class Card {
     this._imageElement.src = this._link;
     this._imageElement.alt = this._title;
     this._titleElement.textContent = this._title;
+    this._likesCount = this._likesArr.length;
     this._likes.textContent = this._likesCount;
     this._id = this._cardId;
+    //console.log(this._likes)
+    //console.log(this._likesArr)
+    console.log(this._likesCount)
   }
+
 
   generateCard() {
     this._element = this._getTemplate();
@@ -37,10 +45,17 @@ class Card {
     return this._element
   }
 
+  likedCard() {
+    return this._likesArr.some(like => like._id === this._userId)
+  };
+
   _handleLikeButton() {
-    this._likeButton.classList.toggle('card__like-button_active')
-    this._hundleLikeCard(this._cardId);
-    console.log(this._cardId);
+    if (this.likedCard()) {
+      this._removeLike(this._cardId)
+    } else {
+      this._hundleLikeCard(this._cardId)
+    }
+    this._likeButton.classList.toggle('card__like-button_active');
   }
 
   _handleRemoveButton() {
@@ -57,7 +72,6 @@ class Card {
     this._imageElement.addEventListener('click', () =>
       this._handleCardClick(this._link, this._title));
   }
-
 }
 
 export default Card
