@@ -108,7 +108,7 @@ const createCard = (dataCard, userId) => {
     handleLikeCard: (cardId) => {
       api.putLikeCard(cardId)
         .then((res) => {
-          const likesCounter = card._likes;
+          const likesCounter = dataCard._likes;
           likesCounter.textContent = res.likes ? res.likes.length : 0;
         })
         .catch(err => {
@@ -118,7 +118,7 @@ const createCard = (dataCard, userId) => {
     removeLikeCard: (cardId) => {
       api.deleteLikeCard(cardId)
         .then((res) => {
-          const likesCounter = card._likes;
+          const likesCounter = dataCard._likes;
           likesCounter.textContent = res.likes ? res.likes.length : 0;
         })
         .catch(err => {

@@ -49,12 +49,6 @@ class Card {
     return this._dataLikes.some(like => like._id === this._userId);
   }
 
-  // toggleLike() {
-  //   if (this.likedCard()) {
-  //     this._
-  //   }
-  // }
-
   _handleLikeButton() {
     if (this.likedCard()) {
       this._removeLikeCard(this._cardId);
@@ -64,6 +58,8 @@ class Card {
     this._likeButton.classList.toggle('card__like-button_active');
     this._likes.textContent = this._dataLikes.length;
   }
+
+
 
   _handleRemoveButton() {
     this._handleCardDelete(this._cardId, this._element);
