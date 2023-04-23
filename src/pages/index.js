@@ -7,6 +7,7 @@ import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import {
   options,
   popups,
@@ -53,6 +54,11 @@ const defaultCardList = new Section({
   renderer: renderCard
 }, '.cards__list');
 
+const popupCardDelete = new PopupWithSubmit({ popupSelector: '.popup_type_card-delete' });
+popupCardDelete.setEventListeners();
+
+
+
 // Функция для обработки отправки формы редактирования профиля
 function handleEditProfile(input) {
   api.setUserInfo(input.name, input.job)
@@ -69,15 +75,19 @@ api.getUserInfo()
     userId = res._id;
     api.getInitialCards()
       .then(res => {
+        //console.log(res)
         const data = res.map(item => {
           return {
             name: item.name,
             link: item.link,
-            id: item._id,
-            likes: item.likes.length
+            cardId: item._id,
+            likes: item.likes,
+            ownerId: item.owner._id
           };
         });
+        // console.log(data.cardId)
         defaultCardList.renderer(data, userId);
+        //console.log(data)
       })
       .catch(err => {
         console.error('ошибка получения данных', err);
@@ -87,40 +97,50 @@ api.getUserInfo()
 
 let userId;
 
-function hundleLikeCard(cardId) {
-  api.putLikeCard(cardId)
-    .then((res) => {
-      const likesCounter = document.querySelector('.card__like-counter');
-      likesCounter.textContent = res.likes;
-    })
-    .catch(err => {
-      console.error('ошибка получения данных', err);
-    });
-}
+const createCard = (dataCard, userId) => {
+  const card = new Card({
+    dataCard: dataCard,
+    userId: userId,
+    templateSelector: '#card-template',
+    handleCardClick: (cardLink, cardName) => {
+      popupWithImage.open(cardLink, cardName);
+    },
+    handleLikeCard: (cardId) => {
+      api.putLikeCard(cardId)
+        .then((res) => {
+          const likesCounter = card._likes;
+          likesCounter.textContent = res.likes ? res.likes.length : 0;
+        })
+        .catch(err => {
+          console.error('ошибка получения данных', err);
+        });
+    },
+    removeLikeCard: (cardId) => {
+      api.deleteLikeCard(cardId)
+        .then((res) => {
+          const likesCounter = card._likes;
+          likesCounter.textContent = res.likes ? res.likes.length : 0;
+        })
+        .catch(err => {
+          console.error('ошибка получения данных', err);
+        });
+    },
+    handleCardDelete: () => {
+      popupCardDelete.open();
+      popupCardDelete.handleSubmit(() => {
+        api.deleteCard(card._cardId)
+          .then(() => {
+            card._handleRemoveButton();
+            popupCardDelete.close();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    },
+  });
 
-function removeLikeCard(cardId) {
-  api.deleteLikeCard(cardId)
-    .then((res) => {
-      const likesCounter = document.querySelector('.card__like-counter');
-      likesCounter.textContent = res.likes;
-    })
-    .catch(err => {
-      console.error('ошибка получения данных', err);
-    });
-}
-
-
-// Функция для обработки кликов на изображении карточки и открытия всплывающего окна с полноразмерным изображением
-function handleCardClick(cardLink, cardName) {
-  popupWithImage.open(cardLink, cardName);
-};
-
-// Функция для создания нового элемента карточки на основе переданных данных
-function createCard(dataCard, userId) {
-  const card = new Card({ dataCard }, '#card-template', userId, handleCardClick, hundleLikeCard, removeLikeCard);
-  const cardTemp = card.generateCard();
-  card._likes.textContent = dataCard.likes;
-  return cardTemp;
+  return card.generateCard();
 };
 
 // Функция для добавления только что созданной карточки в список карточек по умолчанию
@@ -134,7 +154,6 @@ function handleFormSubmitNewCard(data) {
     .then(res => {
       const newCard = createCard({ name: data.name, link: data.link, likes: 0, id: data.id });
       defaultCardList.addItem(newCard)
-      console.log(data);
     })
   addCardFormPopup.close();
 }
@@ -164,21 +183,4 @@ editProfileFormPopup.setEventListeners();
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
 
-// const popupCardDelete = new PopupWithSubmit({ popupSelector:'.popup_type_card-delete'});
-// popupCardDelete.setEventListeners();
 
-// и
-
-// handleClickIconDelete: () => {
-//       popupCardDelete.open();
-//       popupCardDelete.handleSubmit(() => {
-//       api.deleteCard(item._id)
-//       .then(() => {
-//         card.handleDeleteCard();
-//         popupCardDelete.close();
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//     })
-//       })
-//     }

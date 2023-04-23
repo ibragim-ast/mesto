@@ -95,11 +95,13 @@
       </div>
     </div>
     <!-- popup подтверждения удаления карточки -->
-    <div class="popup popup_type_delete">
+    <div class="popup popup_type_card-delete">
       <div class="popup__container">
-        <h2 class="form__title">Вы уверены?</h2>
-        <button class="form__submit" type="submit" value="Да">Да</button>
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
+        <form class="form" name="deleteCard" method="post" novalidate>
+          <h2 class="form__title">Вы уверены?</h2>
+          <button class="form__submit" type="submit" value="Да">Да</button>
+        </form>
       </div>
     </div>
 

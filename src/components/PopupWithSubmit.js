@@ -1,7 +1,8 @@
-export default class PopupWithSubmit extends Popup {
+import Popup from "./Popup.js";
+class PopupWithSubmit extends Popup {
   constructor({ popupSelector }) {
-    super(popupSelector);
-    this._popupForm = this._popup.querySelector('.popup__form');
+    super(document.querySelector(popupSelector));
+    this._popupForm = this._popup.querySelector('.form');
   }
 
   handleSubmit(action) {
@@ -16,3 +17,5 @@ export default class PopupWithSubmit extends Popup {
     });
   }
 }
+
+export default PopupWithSubmit
