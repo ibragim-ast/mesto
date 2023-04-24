@@ -81,7 +81,8 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         link: item.link,
         cardId: item._id,
         likes: item.likes,
-        ownerId: item.owner._id
+        ownerId: item.owner._id,
+        userId: userId
       };
     });
     defaultCardList.renderer(cardsData);

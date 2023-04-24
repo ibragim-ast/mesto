@@ -1,11 +1,11 @@
 class Card {
-  constructor({ dataCard, templateSelector, userId, handleCardClick, handleLikeCard, removeLikeCard, handleCardDelete }) {
+  constructor({ dataCard, templateSelector, handleCardClick, handleLikeCard, removeLikeCard, handleCardDelete }) {
     this._templateSelector = templateSelector;
     this._name = dataCard.name;
     this._link = dataCard.link;
     this._dataLikes = dataCard.likes;
     this._cardId = dataCard.cardId;
-    this._userId = userId;
+    this._userId = dataCard.userId;
     this._likesCounter = dataCard.likes.length;
     this._ownerId = dataCard.ownerId;
     this._handleLike = handleLikeCard;
@@ -38,8 +38,6 @@ class Card {
     this._deleteButton = this._element.querySelector('.card__remove-button');
     this._setEventListeners();
     this._setData();
-    // console.log(this._ownerId)
-    console.log(userId)
     if (this._ownerId !== userId) {
       this._deleteButton.style.display = 'none';
     }
