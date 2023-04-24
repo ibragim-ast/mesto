@@ -27,7 +27,14 @@ class Card {
     this._likesCounter = this._dataLikes.length;
     this._likes.textContent = this._likesCounter;
     this._cardId = this._cardId;
+
+    if (this._dataLikes.some(like => like._id === this._userId)) {
+      this._likeButton.classList.add('card__like-button_active');
+    } else {
+      this._likeButton.classList.remove('card__like-button_active');
+    }
   }
+
 
   generateCard(userId) {
     this._element = this._getTemplate();
@@ -52,12 +59,15 @@ class Card {
   _handleLikeButton() {
     if (this._dataLikes.some(like => like._id === this._userId)) {
       this._removeLike(this._cardId);
+      this._dataLikes = this._dataLikes.filter(like => like._id !== this._userId);
     } else {
       this._handleLike(this._cardId);
+      this._dataLikes.push({ _id: this._userId });
     }
     this._likeButton.classList.toggle('card__like-button_active');
     this._likes.textContent = this._dataLikes.length;
   }
+
 
   _handleDeleteCardButton() {
     this._handleCardDelete(this._cardId, this._element);
