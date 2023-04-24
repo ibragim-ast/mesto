@@ -3,7 +3,7 @@ class Card {
     this._templateSelector = templateSelector;
     this._name = dataCard.name;
     this._link = dataCard.link;
-    this._dataLikes = dataCard.likes;
+    this._dataLikes = dataCard.likes ? dataCard.likes : [];
     this._cardId = dataCard.cardId;
     this._userId = dataCard.userId;
     this._likesCounter = dataCard.likes.length;
