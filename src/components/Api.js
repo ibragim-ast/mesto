@@ -59,7 +59,7 @@ class Api {
       .then(res => this._checkErrors(res))
   }
 
-  deleteCards(cardId) {
+  deleteCard(cardId) {
     return fetch(`${this._address}cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,

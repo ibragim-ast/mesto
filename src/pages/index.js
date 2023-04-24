@@ -117,12 +117,13 @@ const createCard = (dataCard, userId) => {
           console.error('ошибка получения данных', err);
         });
     },
-    handleCardDelete: () => {
+    handleCardDelete: (cardId) => {
       popupCardDelete.open();
       popupCardDelete.handleSubmit(() => {
-        api.deleteCard(card._cardId)
+        api.deleteCard(cardId)
           .then(() => {
-            card._handleRemoveButton();
+            card._handleDeleteCardButton();
+            card.deleteCard();
             popupCardDelete.close();
           })
           .catch((err) => {

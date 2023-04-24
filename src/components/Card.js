@@ -38,10 +38,15 @@ class Card {
     this._deleteButton = this._element.querySelector('.card__remove-button');
     this._setEventListeners();
     this._setData();
-    if (this._ownerId !== userId) {
+    if (this._ownerId !== this._userId) {
       this._deleteButton.style.display = 'none';
     }
     return this._element;
+  }
+
+  deleteCard() {
+    this._element.remove();
+    this._element = null;
   }
 
   _handleLikeButton() {
