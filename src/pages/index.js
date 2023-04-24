@@ -69,33 +69,24 @@ function handleEditProfile(input) {
     .catch((error) => console.log(`Ошибка: ${error}`));
 }
 
-api.getUserInfo()
-  .then((res) => {
-    userInfo.setUserInfo(res.name, res.about);
-    userId = res._id;
-    api.getInitialCards()
-      .then(res => {
-        //console.log(res)
-        const data = res.map(item => {
-          return {
-            name: item.name,
-            link: item.link,
-            cardId: item._id,
-            likes: item.likes,
-            ownerId: item.owner._id
-          };
-        });
-        // console.log(data.cardId)
-        defaultCardList.renderer(data, userId);
-        //console.log(data)
-      })
-      .catch(err => {
-        console.error('ошибка получения данных', err);
-      });
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([infoUser, initialCards]) => {
+    userInfo.setUserInfo(infoUser.name, infoUser.about);
+    const userId = infoUser._id
+    console.log(userId)
+
+    const cardsData = initialCards.map(item => {
+      return {
+        name: item.name,
+        link: item.link,
+        cardId: item._id,
+        likes: item.likes,
+        ownerId: item.owner._id
+      };
+    });
+    defaultCardList.renderer(cardsData);
   })
   .catch((error) => console.log(`Ошибка: ${error}`));
-
-let userId;
 
 const createCard = (dataCard, userId) => {
   const card = new Card({
@@ -108,7 +99,7 @@ const createCard = (dataCard, userId) => {
     handleLikeCard: (cardId) => {
       api.putLikeCard(cardId)
         .then((res) => {
-          const likesCounter = dataCard._likes;
+          const likesCounter = dataCard.likes;
           likesCounter.textContent = res.likes ? res.likes.length : 0;
         })
         .catch(err => {
