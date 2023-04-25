@@ -23,5 +23,7 @@ export const cardLink = addCardPopup.querySelector('.form__input_type_link');
 export const popupLargeImageContainer = document.querySelector('.popup_type_large-image');
 export const popupImage = popupLargeImageContainer.querySelector('.popup__image');
 export const popupImageCaption = popupLargeImageContainer.querySelector('.popup__image-caption');
-
+export const popupEditAvatar = document.querySelector('.popup_type_edit-avatar');
+export const openEditAvatarBtn = document.querySelector('.profile__avatar');
+export const imageAvatar = document.querySelector('.profile__image');
 

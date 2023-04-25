@@ -17,7 +17,9 @@
   <main class="main">
 
     <section class="profile">
-      <img class="profile__image" src="<%= require('./images/image.jpeg') %>" alt="Аватар пользователя">
+      <button class="profile__avatar">
+        <img class="profile__image" src='#' alt="Аватар пользователя">
+      </button>
       <div class="profile__info">
         <h1 class="profile__user-name">Ибрагим Астамиров</h1>
         <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
@@ -50,7 +52,7 @@
               <span class="form__input-error" id="profile-name-error"></span>
             </div>
             <div class="form__section">
-              <input class="form__input form__input_type_job" id="profile-job" type="text" name="job" placeholder="О себе" required minlength="2"
+              <input class="form__input form__input_type_job" id="profile-job" type="text" name="about" placeholder="О себе" required minlength="2"
                 maxlength="200">
               <span class="form__input-error" id="profile-job-error"></span>
             </div>
@@ -94,6 +96,7 @@
         </figure>
       </div>
     </div>
+
     <!-- popup подтверждения удаления карточки -->
     <div class="popup popup_type_card-delete">
       <div class="popup__container">
@@ -101,6 +104,21 @@
         <form class="form" name="deleteCard" method="post" novalidate>
           <h2 class="form__title">Вы уверены?</h2>
           <button class="form__submit" type="submit" value="Да">Да</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- popup смены аватара -->
+    <div class="popup popup_type_edit-avatar">
+      <div class="popup__container">
+        <button class="popup__close" type="button" aria-label="Закрыть"></button>
+        <form class="form" name="editAvatar" method="get" novalidate>
+          <h2 class="form__title">Обновить аватар</h2>
+          <div class="form__section form__section_type_avatar">
+            <input id="form-input" class="form__input" type="url" name="avatar" placeholder="Аватар" value="" required minlength="2" maxlength="200">
+            <span class="form__input-error"></span>
+          </div>
+          <button class="form__submit form__submit_avatar" type="submit">Сохранить</button>
         </form>
       </div>
     </div>

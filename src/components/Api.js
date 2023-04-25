@@ -26,26 +26,27 @@ class Api {
       .then(res => this._checkErrors(res))
   }
 
-  setUserInfo(name, about) {
-    return fetch(`${this._address}/users/me`, {
+  setUserInfo(data) {
+    return fetch(`${this._address}users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: about
+        name: data.name,
+        about: data.about,
       })
     })
-      .then(res => this._checkErrors(res))
+      .then((res) => this._checkErrors(res))
   }
 
   getEditAvatar(link) {
-    return fetch(`${this._address}/users/me/avatar`, {
+    return fetch(`${this._address}users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: link,
+        avatar: link.avatar,
       }),
-    }).then((res) => this._stateResponse(res));
+    })
+      .then((res) => this._checkErrors(res))
   }
 
   createNewCard(data) {
@@ -56,7 +57,7 @@ class Api {
         name: data.name, link: data.link
       })
     })
-      .then(res => this._checkErrors(res))
+      .then((res) => this._checkErrors(res))
   }
 
   deleteCard(cardId) {

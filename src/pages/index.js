@@ -24,12 +24,16 @@ import {
   profileUserName,
   jobInput,
   profileUserProfession,
-  editProfilePopup
+  editProfilePopup,
+  popupEditAvatar,
+  openEditAvatarBtn,
+  imageAvatar
 } from '../utils/constants.js';
 import { data } from 'autoprefixer';
 
 const addCardForm = document.forms['addCard'];
 const editProfileForm = document.forms['editProfile'];
+const editAvatarForm = document.forms['editAvatar'];
 
 // Создание экземпляра валидатора для формы добавления карточки
 const addCardValidator = new FormValidator(options, addCardForm);
@@ -37,17 +41,67 @@ const addCardValidator = new FormValidator(options, addCardForm);
 // Создание экземпляра валидатора для формы редактирования профиля
 const editProfileValidator = new FormValidator(options, editProfileForm);
 
+
 // Создание экземпляра всплывающего окна с полноразмерным изображением
 const popupWithImage = new PopupWithImage(popupLargeImageContainer);
 
 // Создание экземпляра класса UserInfo для отображения информации о пользователе
-const userInfo = new UserInfo({ userNameSelector: profileUserName, userJobSelector: profileUserProfession });
+const userInfo = new UserInfo({ userNameSelector: profileUserName, userJobSelector: profileUserProfession, userAvatar: imageAvatar });
+
+// Функция для обработки отправки формы редактирования профиля
+const handleEditProfile = (input) => {
+  api.setUserInfo(input)
+    .then((res) => {
+      userInfo.setUserInfo(res);
+    })
+    .then(() =>
+      editProfileFormPopup.close()
+    )
+    .catch((error) => console.log(`Ошибка: ${error}`))
+    .finally(() => {
+      renderLoading(false, editProfilePopup)
+    })
+}
+
 
 // Создание экземпляра всплывающего окна для редактирования профиля
 const editProfileFormPopup = new PopupWithForm(editProfilePopup, handleEditProfile);
 
 // Создание экземпляра всплывающего окна для добавления карточки
 const addCardFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
+
+const handleEditAvatar = (link) => {
+  api.getEditAvatar(link)
+    .then((res) => {
+      userInfo.setUserInfo(res);
+    })
+    .then(() => editAvatarPopup.close())
+    .catch((err) => console.log(`Ошибка ${err}`))
+    .finally(() => {
+      renderLoading(false, popupEditAvatar);
+    });
+};
+
+
+const editAvatarValidator = new FormValidator(options, editAvatarForm);
+
+const editAvatarPopup = new PopupWithForm(popupEditAvatar, handleEditAvatar);
+editAvatarPopup.setEventListeners();
+
+openEditAvatarBtn.addEventListener('click', () => {
+  editAvatarPopup.open();
+  renderLoading(true, popupEditAvatar);
+});
+
+editAvatarValidator.enableValidation();
+
+function renderLoading(loading, popup) {
+  if (loading) {
+    popup.querySelector(".form__submit").textContent = "Сохранить";
+  } else {
+    popup.querySelector(".form__submit").textContent = "Сохранение...";
+  }
+}
 
 // Создание экземпляра класса Section для отображения начальных карточек на странице
 const defaultCardList = new Section({
@@ -59,19 +113,9 @@ popupCardDelete.setEventListeners();
 
 
 
-// Функция для обработки отправки формы редактирования профиля
-function handleEditProfile(input) {
-  api.setUserInfo(input.name, input.job)
-    .then((res) => {
-      userInfo.setUserInfo(res.name, res.about);
-      editProfileFormPopup.close();
-    })
-    .catch((error) => console.log(`Ошибка: ${error}`));
-}
-
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([infoUser, initialCards]) => {
-    userInfo.setUserInfo(infoUser.name, infoUser.about);
+    userInfo.setUserInfo(infoUser);
     const userId = infoUser._id
     console.log(userId)
 
@@ -148,24 +192,34 @@ function handleFormSubmitNewCard(data) {
       const newCard = createCard({ name: data.name, link: data.link, likes: 0, id: data.id });
       defaultCardList.addItem(newCard)
     })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading(false, addCardPopup)
+    })
+
   addCardFormPopup.close();
 }
 
 // Установка слушателей событий для всплывающего окна редактирования профиля
-function handleOpenEditForm() {
+const handleOpenEditForm = () => {
   editProfileFormPopup.setInputValues(userInfo.getUserInfo());
   editProfileValidator.clearFormErrors();
   editProfileFormPopup.open();
+  renderLoading(true, editProfilePopup)
 }
 
 // Установка слушателей событий для кнопки добавления карточки
 function handleAddCardButtonClick() {
   addCardValidator.clearFormErrors();
   addCardFormPopup.open();
+  renderLoading(true, addCardPopup)
 }
 
 openProfileEditButton.addEventListener('click', handleOpenEditForm);
 openAddCardPopupButton.addEventListener('click', handleAddCardButtonClick);
+
 
 popupWithImage.setEventListeners();
 addCardFormPopup.setEventListeners();
@@ -175,5 +229,6 @@ editProfileFormPopup.setEventListeners();
 // Включение валидации форм
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
+
 
 

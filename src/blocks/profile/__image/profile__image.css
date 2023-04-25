@@ -2,6 +2,9 @@
   width: 120px;
   border-radius: 100px;
   margin-right: 31px;
+  object-fit: cover;
+  position: relative;
+  z-index: -1;
 }
 
 @media screen and (max-width: 767px) {
