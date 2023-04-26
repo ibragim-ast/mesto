@@ -8,7 +8,7 @@ export const options = {
   disabledButtonClass: 'form__submit_inactive',
 }
 
-export const openProfileEditButton = document.querySelector('.profile__edit-button');
+export const buttonOpenProfileEdit = document.querySelector('.profile__edit-button');
 export const openAddCardPopupButton = document.querySelector('.profile__add-button');
 export const profileUserName = document.querySelector('.profile__user-name');
 export const profileUserProfession = document.querySelector('.profile__user-profession');
@@ -26,4 +26,7 @@ export const popupImageCaption = popupLargeImageContainer.querySelector('.popup_
 export const popupEditAvatar = document.querySelector('.popup_type_edit-avatar');
 export const openEditAvatarBtn = document.querySelector('.profile__avatar');
 export const imageAvatar = document.querySelector('.profile__image');
-
+export const likeButton = document.querySelector('.card__like-button');
+export const addCardForm = document.forms['addCard'];
+export const editProfileForm = document.forms['editProfile'];
+export const editAvatarForm = document.forms['editAvatar'];

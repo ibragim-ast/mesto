@@ -13,7 +13,7 @@ import {
   popups,
   elementsList,
   openAddCardPopupButton,
-  openProfileEditButton,
+  buttonOpenProfileEdit,
   popupImage,
   popupImageCaption,
   popupLargeImageContainer,
@@ -27,13 +27,14 @@ import {
   editProfilePopup,
   popupEditAvatar,
   openEditAvatarBtn,
-  imageAvatar
+  imageAvatar,
+  addCardForm,
+  editProfileForm,
+  editAvatarForm
 } from '../utils/constants.js';
 import { data } from 'autoprefixer';
 
-const addCardForm = document.forms['addCard'];
-const editProfileForm = document.forms['editProfile'];
-const editAvatarForm = document.forms['editAvatar'];
+
 
 // Создание экземпляра валидатора для формы добавления карточки
 const addCardValidator = new FormValidator(options, addCardForm);
@@ -141,21 +142,19 @@ const createCard = (dataCard, userId) => {
     handleCardClick: (cardLink, cardName) => {
       popupWithImage.open(cardLink, cardName);
     },
-    handleLikeCard: (cardId) => {
+    handleLikeCard: function (cardId) {
       api.putLikeCard(cardId)
         .then((res) => {
-          const likesCounter = dataCard.likes;
-          likesCounter.textContent = res.likes ? res.likes.length : 0;
+          this.showLikes(res.likes)
         })
         .catch(err => {
           console.error('ошибка получения данных', err);
         });
     },
-    removeLikeCard: (cardId) => {
+    removeLikeCard: function (cardId) {
       api.deleteLikeCard(cardId)
         .then((res) => {
-          const likesCounter = dataCard._likes;
-          likesCounter.textContent = res.likes ? res.likes.length : 0;
+          this.showLikes(res.likes)
         })
         .catch(err => {
           console.error('ошибка получения данных', err);
@@ -217,7 +216,7 @@ function handleAddCardButtonClick() {
   renderLoading(true, addCardPopup)
 }
 
-openProfileEditButton.addEventListener('click', handleOpenEditForm);
+buttonOpenProfileEdit.addEventListener('click', handleOpenEditForm);
 openAddCardPopupButton.addEventListener('click', handleAddCardButtonClick);
 
 
