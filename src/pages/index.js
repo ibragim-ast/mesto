@@ -56,7 +56,7 @@ const handleEditProfile = (input) => {
       userInfo.setUserInfo(res);
     })
     .then(() =>
-      editProfileFormPopup.close()
+      profileEditFormPopup.close()
     )
     .catch((error) => console.log(`Ошибка: ${error}`))
     .finally(() => {
@@ -66,10 +66,10 @@ const handleEditProfile = (input) => {
 
 
 // Создание экземпляра всплывающего окна для редактирования профиля
-const editProfileFormPopup = new PopupWithForm(editProfilePopup, handleEditProfile);
+const profileEditFormPopup = new PopupWithForm(editProfilePopup, handleEditProfile);
 
 // Создание экземпляра всплывающего окна для добавления карточки
-const addCardFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
+const cardAddFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
 
 const handleEditAvatar = (link) => {
   api.getEditAvatar(link)
@@ -198,21 +198,21 @@ function handleFormSubmitNewCard(data) {
       renderLoading(false, addCardPopup)
     })
 
-  addCardFormPopup.close();
+  cardAddFormPopup.close();
 }
 
 // Установка слушателей событий для всплывающего окна редактирования профиля
 const handleOpenEditForm = () => {
-  editProfileFormPopup.setInputValues(userInfo.getUserInfo());
+  profileEditFormPopup.setInputValues(userInfo.getUserInfo());
   editProfileValidator.clearFormErrors();
-  editProfileFormPopup.open();
+  profileEditFormPopup.open();
   renderLoading(true, editProfilePopup)
 }
 
 // Установка слушателей событий для кнопки добавления карточки
 function handleAddCardButtonClick() {
   addCardValidator.clearFormErrors();
-  addCardFormPopup.open();
+  cardAddFormPopup.open();
   renderLoading(true, addCardPopup)
 }
 
@@ -221,9 +221,9 @@ openAddCardPopupButton.addEventListener('click', handleAddCardButtonClick);
 
 
 popupWithImage.setEventListeners();
-addCardFormPopup.setEventListeners();
+cardAddFormPopup.setEventListeners();
 popupWithImage.setEventListeners();
-editProfileFormPopup.setEventListeners();
+profileEditFormPopup.setEventListeners();
 
 // Включение валидации форм
 addCardValidator.enableValidation();
