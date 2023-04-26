@@ -67,6 +67,7 @@ class Card {
     this._like = likes;
     this._numberLikes = likes.length;
     this._likes.textContent = this._numberLikes;
+    likes = Array.from(likes);
 
     if (likes.some(like => like._id === this._userId)) {
       this._likeButton.classList.add('card__like-button_active');

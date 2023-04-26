@@ -228,6 +228,3 @@ editProfileFormPopup.setEventListeners();
 // Включение валидации форм
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
-
-
-
