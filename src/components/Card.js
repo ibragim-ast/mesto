@@ -76,14 +76,14 @@ class Card {
     }
   }
 
-  _handleDeleteCardButton() {
+  handleDeleteCardButton() {
     this._handleCardDelete(this._cardId, this._element);
   }
 
   _setEventListeners() {
     this._likeButton.addEventListener('click', () => this.isLiked());
 
-    this._deleteButton.addEventListener('click', () => this._handleDeleteCardButton());
+    this._deleteButton.addEventListener('click', () => this.handleDeleteCardButton());
 
     this._imageElement.addEventListener('click', () => this._handleCardClick(this._link, this._name));
   }
