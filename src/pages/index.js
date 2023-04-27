@@ -17,7 +17,7 @@ import {
   popupImage,
   popupImageCaption,
   popupLargeImageContainer,
-  addCardPopup,
+  cardAddPopup,
   cardName,
   cardLink,
   profileNameInput,
@@ -26,27 +26,35 @@ import {
   profileUserProfession,
   profileEditPopup,
   popupEditAvatar,
-  openEditAvatarBtn,
+  buttonOpenEditAvatar,
   imageAvatar,
-  addCardForm,
-  editProfileForm,
-  editAvatarForm
+  cardAddForm,
+  profileEditForm,
+  avatarEditForm
 } from '../utils/constants.js';
 import { data } from 'autoprefixer';
 
-
-
-// Создание экземпляра валидатора для формы добавления карточки
-const addCardValidator = new FormValidator(options, addCardForm);
-
-// Создание экземпляра валидатора для формы редактирования профиля
-const editProfileValidator = new FormValidator(options, editProfileForm);
-
-// Создание экземпляра всплывающего окна с полноразмерным изображением
-const popupWithImage = new PopupWithImage(popupLargeImageContainer);
+// Создание экземпляров валидаторов для форм
+const avatarEditValidator = new FormValidator(options, avatarEditForm);
+const addCardValidator = new FormValidator(options, cardAddForm);
+const editProfileValidator = new FormValidator(options, profileEditForm);
 
 // Создание экземпляра класса UserInfo для отображения информации о пользователе
 const userInfo = new UserInfo({ userNameSelector: profileUserName, userJobSelector: profileUserProfession, userAvatar: imageAvatar });
+
+// Функция для обработки отправки формы редактирования профиля
+const handleEditAvatar = (link) => {
+  renderLoading(false, popupEditAvatar);
+  api.getEditAvatar(link)
+    .then((res) => {
+      userInfo.setUserInfo(res);
+    })
+    .then(() => avatarEditPopup.close())
+    .catch((err) => console.log(`Ошибка ${err}`))
+    .finally(() => {
+      renderLoading(true, popupEditAvatar);
+    });
+};
 
 // Функция для обработки отправки формы редактирования профиля
 const handleEditProfile = (input) => {
@@ -64,36 +72,16 @@ const handleEditProfile = (input) => {
     })
 }
 
-// Создание экземпляра всплывающего окна для редактирования профиля
+// Создание экземпляров всплывающих окон
+const popupWithImage = new PopupWithImage(popupLargeImageContainer);
+const cardAddFormPopup = new PopupWithForm(cardAddPopup, handleFormSubmitNewCard);
 const profileEditFormPopup = new PopupWithForm(profileEditPopup, handleEditProfile);
-
-// Создание экземпляра всплывающего окна для добавления карточки
-const cardAddFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
-
-const handleEditAvatar = (link) => {
-  renderLoading(false, popupEditAvatar);
-  api.getEditAvatar(link)
-    .then((res) => {
-      userInfo.setUserInfo(res);
-    })
-    .then(() => avatarEditPopup.close())
-    .catch((err) => console.log(`Ошибка ${err}`))
-    .finally(() => {
-      renderLoading(true, popupEditAvatar);
-    });
-};
-
-const avatarEditValidator = new FormValidator(options, editAvatarForm);
-
 const avatarEditPopup = new PopupWithForm(popupEditAvatar, handleEditAvatar);
 avatarEditPopup.setEventListeners();
+const popupCardDelete = new PopupWithSubmit({ popupSelector: '.popup_type_card-delete' });
+popupCardDelete.setEventListeners();
 
-openEditAvatarBtn.addEventListener('click', () => {
-  avatarEditPopup.open();
-});
-
-avatarEditValidator.enableValidation();
-
+//Функция отображения процесса загрузки и получения информации с сервера
 function renderLoading(loading, popup) {
   if (loading) {
     popup.querySelector(".form__submit").textContent = "Сохранить";
@@ -107,11 +95,7 @@ const defaultCardList = new Section({
   renderer: renderCard
 }, '.cards__list');
 
-const popupCardDelete = new PopupWithSubmit({ popupSelector: '.popup_type_card-delete' });
-popupCardDelete.setEventListeners();
-
-
-
+// Получение информации о пользователе и списка карточек с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([infoUser, initialCards]) => {
     userInfo.setUserInfo(infoUser);
@@ -132,6 +116,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   })
   .catch((error) => console.log(`Ошибка: ${error}`));
 
+//Функция создания новой карточки
 const createCard = (dataCard, userId) => {
   const card = new Card({
     dataCard: dataCard,
@@ -184,7 +169,7 @@ function renderCard(data) {
 
 // Функция для обработки отправки формы добавления карточки
 function handleFormSubmitNewCard(data) {
-  renderLoading(false, addCardPopup)
+  renderLoading(false, cardAddPopup)
   api.createNewCard(data)
     .then(res => {
       const newCard = createCard({ name: data.name, link: data.link, likes: 0, id: data.id });
@@ -194,7 +179,7 @@ function handleFormSubmitNewCard(data) {
       console.log(err);
     })
     .finally(() => {
-      renderLoading(true, addCardPopup)
+      renderLoading(true, cardAddPopup)
     })
 
   cardAddFormPopup.close();
@@ -215,7 +200,9 @@ function handleAddCardButtonClick() {
 
 buttonOpenProfileEdit.addEventListener('click', handleOpenEditForm);
 buttonOpenAddCardPopup.addEventListener('click', handleAddCardButtonClick);
-
+buttonOpenEditAvatar.addEventListener('click', () => {
+  avatarEditPopup.open();
+});
 
 popupWithImage.setEventListeners();
 cardAddFormPopup.setEventListeners();
@@ -225,3 +212,4 @@ profileEditFormPopup.setEventListeners();
 // Включение валидации форм
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
+avatarEditValidator.enableValidation();
