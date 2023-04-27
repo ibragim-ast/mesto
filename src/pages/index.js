@@ -12,7 +12,7 @@ import {
   options,
   popups,
   elementsList,
-  openAddCardPopupButton,
+  buttonOpenAddCardPopup,
   buttonOpenProfileEdit,
   popupImage,
   popupImageCaption,
@@ -24,7 +24,7 @@ import {
   profileUserName,
   jobInput,
   profileUserProfession,
-  editProfilePopup,
+  profileEditPopup,
   popupEditAvatar,
   openEditAvatarBtn,
   imageAvatar,
@@ -42,7 +42,6 @@ const addCardValidator = new FormValidator(options, addCardForm);
 // Создание экземпляра валидатора для формы редактирования профиля
 const editProfileValidator = new FormValidator(options, editProfileForm);
 
-
 // Создание экземпляра всплывающего окна с полноразмерным изображением
 const popupWithImage = new PopupWithImage(popupLargeImageContainer);
 
@@ -51,6 +50,7 @@ const userInfo = new UserInfo({ userNameSelector: profileUserName, userJobSelect
 
 // Функция для обработки отправки формы редактирования профиля
 const handleEditProfile = (input) => {
+  renderLoading(false, profileEditPopup)
   api.setUserInfo(input)
     .then((res) => {
       userInfo.setUserInfo(res);
@@ -60,41 +60,39 @@ const handleEditProfile = (input) => {
     )
     .catch((error) => console.log(`Ошибка: ${error}`))
     .finally(() => {
-      renderLoading(false, editProfilePopup)
+      renderLoading(true, profileEditPopup)
     })
 }
 
-
 // Создание экземпляра всплывающего окна для редактирования профиля
-const profileEditFormPopup = new PopupWithForm(editProfilePopup, handleEditProfile);
+const profileEditFormPopup = new PopupWithForm(profileEditPopup, handleEditProfile);
 
 // Создание экземпляра всплывающего окна для добавления карточки
 const cardAddFormPopup = new PopupWithForm(addCardPopup, handleFormSubmitNewCard);
 
 const handleEditAvatar = (link) => {
+  renderLoading(false, popupEditAvatar);
   api.getEditAvatar(link)
     .then((res) => {
       userInfo.setUserInfo(res);
     })
-    .then(() => editAvatarPopup.close())
+    .then(() => avatarEditPopup.close())
     .catch((err) => console.log(`Ошибка ${err}`))
     .finally(() => {
-      renderLoading(false, popupEditAvatar);
+      renderLoading(true, popupEditAvatar);
     });
 };
 
+const avatarEditValidator = new FormValidator(options, editAvatarForm);
 
-const editAvatarValidator = new FormValidator(options, editAvatarForm);
-
-const editAvatarPopup = new PopupWithForm(popupEditAvatar, handleEditAvatar);
-editAvatarPopup.setEventListeners();
+const avatarEditPopup = new PopupWithForm(popupEditAvatar, handleEditAvatar);
+avatarEditPopup.setEventListeners();
 
 openEditAvatarBtn.addEventListener('click', () => {
-  editAvatarPopup.open();
-  renderLoading(true, popupEditAvatar);
+  avatarEditPopup.open();
 });
 
-editAvatarValidator.enableValidation();
+avatarEditValidator.enableValidation();
 
 function renderLoading(loading, popup) {
   if (loading) {
@@ -186,6 +184,7 @@ function renderCard(data) {
 
 // Функция для обработки отправки формы добавления карточки
 function handleFormSubmitNewCard(data) {
+  renderLoading(false, addCardPopup)
   api.createNewCard(data)
     .then(res => {
       const newCard = createCard({ name: data.name, link: data.link, likes: 0, id: data.id });
@@ -195,7 +194,7 @@ function handleFormSubmitNewCard(data) {
       console.log(err);
     })
     .finally(() => {
-      renderLoading(false, addCardPopup)
+      renderLoading(true, addCardPopup)
     })
 
   cardAddFormPopup.close();
@@ -206,18 +205,16 @@ const handleOpenEditForm = () => {
   profileEditFormPopup.setInputValues(userInfo.getUserInfo());
   editProfileValidator.clearFormErrors();
   profileEditFormPopup.open();
-  renderLoading(true, editProfilePopup)
 }
 
 // Установка слушателей событий для кнопки добавления карточки
 function handleAddCardButtonClick() {
   addCardValidator.clearFormErrors();
   cardAddFormPopup.open();
-  renderLoading(true, addCardPopup)
 }
 
 buttonOpenProfileEdit.addEventListener('click', handleOpenEditForm);
-openAddCardPopupButton.addEventListener('click', handleAddCardButtonClick);
+buttonOpenAddCardPopup.addEventListener('click', handleAddCardButtonClick);
 
 
 popupWithImage.setEventListeners();

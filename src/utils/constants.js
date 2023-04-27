@@ -9,14 +9,14 @@ export const options = {
 }
 
 export const buttonOpenProfileEdit = document.querySelector('.profile__edit-button');
-export const openAddCardPopupButton = document.querySelector('.profile__add-button');
+export const buttonOpenAddCardPopup = document.querySelector('.profile__add-button');
 export const profileUserName = document.querySelector('.profile__user-name');
 export const profileUserProfession = document.querySelector('.profile__user-profession');
 export const elementsList = document.querySelector('.cards__list');
 export const popups = document.querySelectorAll('.popup');
-export const editProfilePopup = document.querySelector('.popup_type_edit-profile');
-export const profileNameInput = editProfilePopup.querySelector('.form__input_type_profile-name');
-export const jobInput = editProfilePopup.querySelector('.form__input_type_job');
+export const profileEditPopup = document.querySelector('.popup_type_edit-profile');
+export const profileNameInput = profileEditPopup.querySelector('.form__input_type_profile-name');
+export const jobInput = profileEditPopup.querySelector('.form__input_type_job');
 export const addCardPopup = document.querySelector('.popup_type_add-card');
 export const cardName = addCardPopup.querySelector('.form__input_type_card-name');
 export const cardLink = addCardPopup.querySelector('.form__input_type_link');
