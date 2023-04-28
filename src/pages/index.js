@@ -87,12 +87,13 @@ const defaultCardList = new Section({
   renderer: renderCard
 }, '.cards__list');
 
+let userId;
+
 // Получение информации о пользователе и списка карточек с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([infoUser, initialCards]) => {
     userInfo.setUserInfo(infoUser);
-    const userId = infoUser._id
-
+    userId = infoUser._id
     const cardsData = initialCards.map(item => {
       return {
         name: item.name,
@@ -103,7 +104,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         userId: userId
       };
     });
-    defaultCardList.renderer(cardsData);
+    defaultCardList.renderer(cardsData.reverse());
   })
   .catch((error) => console.log(`Ошибка: ${error}`));
 
@@ -159,6 +160,8 @@ function renderCard(data) {
   defaultCardList.addItem(createCard(data))
 };
 
+
+
 // Функция для обработки отправки формы добавления карточки
 function handleFormSubmitNewCard(data) {
   renderLoading(false, popupAddCard)
@@ -170,6 +173,7 @@ function handleFormSubmitNewCard(data) {
         cardId: res._id,
         likes: res.likes,
         ownerId: res.owner._id,
+        userId: userId
       });
       defaultCardList.addItem(newCard)
       defaultCardList.renderer();

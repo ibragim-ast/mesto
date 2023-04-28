@@ -28,7 +28,6 @@ class Card {
     this._nameElement.textContent = this._name;
     this._likesCounter = this._dataLikes.length;
     this._likes.textContent = this._likesCounter;
-    this._cardId = this._cardId;
   }
 
   generateCard() {
