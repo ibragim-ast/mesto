@@ -135,21 +135,22 @@ const createCard = (dataCard, userId) => {
         });
     },
     handleCardDelete: function (cardId) {
-      popupCardDelete.open();
       popupCardDelete.handleSubmit(() => {
         api.deleteCard(cardId)
           .then(() => {
             this.handleDeleteCardButton();
             this.deleteCard();
+          })
+          .then(() => {
             popupCardDelete.close();
           })
           .catch((err) => {
             console.log(err);
           });
       });
+      popupCardDelete.open();
     },
   });
-
   return card.generateCard();
 };
 

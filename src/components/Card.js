@@ -54,6 +54,7 @@ class Card {
   }
 
   isLiked() {
+    console.log(this._userId)
     if (this._like.some((like) =>
       like._id === this._userId
     )) {
