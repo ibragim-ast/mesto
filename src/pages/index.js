@@ -176,7 +176,6 @@ function handleFormSubmitNewCard(data) {
         userId: userId
       });
       defaultCardList.addItem(newCard)
-      defaultCardList.renderer();
     })
     .catch((err) => {
       console.log(err);
