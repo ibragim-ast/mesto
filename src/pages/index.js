@@ -27,9 +27,9 @@ import {
 import { data } from 'autoprefixer';
 
 // Создание экземпляров валидаторов для форм
-const avatarEditValidator = new FormValidator(options, formAvatarEdit);
-const addCardValidator = new FormValidator(options, formAddCard);
-const profilEeditValidator = new FormValidator(options, formProfileEdit);
+const validatorAvatarEdit = new FormValidator(options, formAvatarEdit);
+const validatorAddCard = new FormValidator(options, formAddCard);
+const validatorProfileEdit = new FormValidator(options, formProfileEdit);
 
 // Создание экземпляра класса UserInfo для отображения информации о пользователе
 const userInfo = new UserInfo({ userNameSelector: profileUserName, userJobSelector: profileUserProfession, userAvatar: imageAvatar });
@@ -179,13 +179,13 @@ function handleFormSubmitNewCard(data) {
 // Установка слушателей событий для всплывающего окна редактирования профиля
 const handleOpenEditForm = () => {
   popupProfileEditForm.setInputValues(userInfo.getUserInfo());
-  profilEeditValidator.clearFormErrors();
+  validatorProfileEdit.clearFormErrors();
   popupProfileEditForm.open();
 }
 
 // Установка слушателей событий для кнопки добавления карточки
 function handleAddCardButtonClick() {
-  addCardValidator.clearFormErrors();
+  validatorAddCard.clearFormErrors();
   popupCardAddForm.open();
 }
 
@@ -201,6 +201,6 @@ popupWithImage.setEventListeners();
 popupProfileEditForm.setEventListeners();
 
 // Включение валидации форм
-addCardValidator.enableValidation();
-profilEeditValidator.enableValidation();
-avatarEditValidator.enableValidation();
+validatorAddCard.enableValidation();
+validatorProfileEdit.enableValidation();
+validatorAvatarEdit.enableValidation();
