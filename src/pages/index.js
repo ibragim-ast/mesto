@@ -164,8 +164,15 @@ function handleFormSubmitNewCard(data) {
   renderLoading(false, popupAddCard)
   api.createNewCard(data)
     .then(res => {
-      const newCard = createCard({ name: data.name, link: data.link, likes: 0, id: data.id });
+      const newCard = createCard({
+        name: data.name,
+        link: data.link,
+        cardId: res._id,
+        likes: res.likes,
+        ownerId: res.owner._id,
+      });
       defaultCardList.addItem(newCard)
+      defaultCardList.renderer();
     })
     .catch((err) => {
       console.log(err);
