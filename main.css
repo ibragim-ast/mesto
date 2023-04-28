@@ -43,3 +43,5 @@
 .form__submit{background-color:#000;border:none;border-radius:2px;color:#fff;cursor:pointer;font-size:18px;font-weight:400;height:50px;line-height:22px;margin:-20px auto 28px;max-width:358px;min-width:83.3%;text-align:center}.form__submit:hover{opacity:.8}@media screen and (max-width:425px){.form__submit{font-size:14px;height:46px;line-height:17px;margin-bottom:25px;max-width:238px}}
 .form__submit_inactive{background-color:transparent;border:1px solid #000;color:#000;opacity:.2;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}
 
+
+/*# sourceMappingURL=main.css.map*/
