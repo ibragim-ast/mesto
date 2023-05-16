@@ -1,5 +1,5 @@
-# Проект: Место
 ![Logo](./src/images/logo.svg)
+# Проект: Место
 
 Учебный проект ["Место"](https://ibragim-ast.github.io/mesto/) реализуется в рамках специализации "Веб-разработчик" в [Я.Практикум](https://practicum.yandex.ru/).
 
